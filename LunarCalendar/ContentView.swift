@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var currentDate: Date = Date()
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
@@ -22,8 +24,9 @@ struct ContentView: View {
                         .fontWeight(.semibold)
                 }
                 
-                // Month Calendar Grid
-                CalendarGridView() // Custom component
+                // Only one week
+//                WeekView(days: Calendar.current.weekDays(for: currentDate))
+                HomeWeekContainer()
                 
                 // Moon phase / festival highlight
                 HStack {
