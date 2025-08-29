@@ -55,29 +55,31 @@ struct ContentView: View {
                     onToday: { currentDate = Date() },
                     onSettings: { showSettings = true }
                 )
-                .sheet(isPresented: $showMonthView) {
-                    MonthView(currentMonth: $currentDate)
-                }
             }
             .padding()
             
         }
         .gesture(
-                DragGesture()
-                    .onEnded { value in
-                        if value.translation.width < -50 {
-                            // swipe left → next week
-                            currentDate = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: currentDate)!
-                        } else if value.translation.width > 50 {
-                            // swipe right → previous week
-                            currentDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: currentDate)!
-                        }
+            DragGesture()
+                .onEnded { value in
+                    if value.translation.height < -50 { // swipe up
+                        showMonthView = true
+                    } else if value.translation.width < -50 {
+                        // swipe left → next week
+                        currentDate = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: currentDate)!
+                    } else if value.translation.width > 50 {
+                        // swipe right → previous week
+                        currentDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: currentDate)!
                     }
-            )
+                }
+        )
+        .sheet(isPresented: $showMonthView) {
+            MonthView(currentMonth: $currentDate)
+        }
     }
 }
 
-
-#Preview {
-    ContentView()
-}
+//
+//#Preview {
+//    ContentView()
+//}
