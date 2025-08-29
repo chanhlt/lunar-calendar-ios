@@ -28,6 +28,7 @@ struct ContentView: View {
                 
                 // Week container bound to currentDate
                 HomeWeekContainer(currentDate: $currentDate)
+                    
                 
                 // Moon phase / festival highlight
                 HStack {
@@ -59,7 +60,20 @@ struct ContentView: View {
                 }
             }
             .padding()
+            
         }
+        .gesture(
+                DragGesture()
+                    .onEnded { value in
+                        if value.translation.width < -50 {
+                            // swipe left → next week
+                            currentDate = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: currentDate)!
+                        } else if value.translation.width > 50 {
+                            // swipe right → previous week
+                            currentDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: currentDate)!
+                        }
+                    }
+            )
     }
 }
 

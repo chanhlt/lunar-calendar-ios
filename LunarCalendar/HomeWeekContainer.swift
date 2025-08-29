@@ -28,6 +28,7 @@ struct HomeWeekContainer: View {
             .padding(.horizontal)
             
             WeekView(days: Calendar.current.weekDays(for: currentDate))
+                
         }
     }
     

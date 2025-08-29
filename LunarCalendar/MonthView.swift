@@ -42,6 +42,21 @@ struct MonthView: View {
             )
 
         }
+        .padding()
+        .background(
+            Color.clear
+                .contentShape(Rectangle())
+                .simultaneousGesture(
+                    DragGesture()
+                        .onEnded { value in
+                            if value.translation.width < -50 {
+                                currentMonth = Calendar.current.date(byAdding: .month, value: 1, to: currentMonth)!
+                            } else if value.translation.width > 50 {
+                                currentMonth = Calendar.current.date(byAdding: .month, value: -1, to: currentMonth)!
+                            }
+                        }
+                )
+        )
     }
     
     private func changeMonth(by value: Int) {
