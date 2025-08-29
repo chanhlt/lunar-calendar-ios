@@ -35,3 +35,9 @@ struct CalendarGridView: View {
         }
     }
 }
+
+
+#Preview {
+    let monthDays = Calendar.current.monthDays(for: Date())
+    CalendarGridView(days: monthDays)
+}

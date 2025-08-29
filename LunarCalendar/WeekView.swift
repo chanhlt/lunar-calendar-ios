@@ -57,3 +57,10 @@ struct WeekView: View {
         }
     }
 }
+
+
+#Preview {
+    // Example: generate 7 days starting from today
+    let weekDays = Calendar.current.weekDays(for: Date())
+    WeekView(days: weekDays)
+}

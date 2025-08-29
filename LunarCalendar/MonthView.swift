@@ -71,3 +71,9 @@ struct MonthView: View {
         return formatter.string(from: date)
     }
 }
+
+
+
+#Preview {
+    MonthView(currentMonth: .constant(Date()))
+}
