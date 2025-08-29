@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct MonthView: View {
-    @State private var currentMonth: Date = Date()
+    @Binding var currentMonth: Date
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         VStack {
@@ -32,6 +33,14 @@ struct MonthView: View {
             CalendarGridView(days: Calendar.current.monthDays(for: currentMonth))
             
             Spacer()
+            
+            BottomTabBar(
+                mode: .home,
+                onHome: { dismiss() },   // 👈 go back to Home
+                onToday: { currentMonth = Date() },
+                onSettings: { /* show settings */ }
+            )
+
         }
     }
     

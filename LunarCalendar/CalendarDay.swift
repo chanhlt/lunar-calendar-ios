@@ -18,29 +18,18 @@ struct CalendarDay: Identifiable, Hashable {
 
 extension Calendar {
     func weekDays(for date: Date) -> [CalendarDay] {
-            guard let weekInterval = self.dateInterval(of: .weekOfMonth, for: date) else { return [] }
-            
-            var days: [CalendarDay] = []
-            var current = weekInterval.start
-            
-            while current < weekInterval.end {
-                let day = component(.day, from: current)
-                let isToday = isDateInToday(current)
-                let inMonth = isDate(current, equalTo: date, toGranularity: .month)
-                
-                days.append(CalendarDay(
-                    date: current,
-                    gregorianDay: day,
-                    lunarDay: "11", // plug in lunar logic later
-                    isToday: isToday,
-                    isInCurrentMonth: inMonth
-                ))
-                
-                current = self.date(byAdding: .day, value: 1, to: current)!
-            }
-            
-            return days
+        let startOfWeek = self.startOfWeek(for: date)
+        return (0..<7).map { offset in
+            let d = self.date(byAdding: .day, value: offset, to: startOfWeek)!
+            return CalendarDay(
+                date: d,
+                gregorianDay: component(.day, from: d),
+                lunarDay: "11", // your lunar logic here
+                isToday: isDateInToday(d),
+                isInCurrentMonth: isDate(d, equalTo: date, toGranularity: .month)
+            )
         }
+    }
     
     func monthDays(for date: Date) -> [CalendarDay] {
         guard let monthInterval = self.dateInterval(of: .month, for: date),

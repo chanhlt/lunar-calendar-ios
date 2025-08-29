@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var currentDate: Date = Date()
+    @State private var showMonthView = false
+    @State private var showSettings = false
     
     var body: some View {
         NavigationStack {
@@ -16,7 +18,7 @@ struct ContentView: View {
                 
                 // Header with today’s date
                 VStack {
-                    Text("Friday, Aug 29, 2025")
+                    Text(currentDate.formatted(date: .long, time: .omitted))
                         .font(.headline)
                         .foregroundColor(.gray)
                     Text("Lunar: 7th Month, 26th Day")
@@ -24,9 +26,8 @@ struct ContentView: View {
                         .fontWeight(.semibold)
                 }
                 
-                // Only one week
-//                WeekView(days: Calendar.current.weekDays(for: currentDate))
-                HomeWeekContainer()
+                // Week container bound to currentDate
+                HomeWeekContainer(currentDate: $currentDate)
                 
                 // Moon phase / festival highlight
                 HStack {
@@ -47,36 +48,21 @@ struct ContentView: View {
                 Spacer()
                 
                 // Bottom Navigation
-                HStack {
-                    Spacer()
-                    NavigationLink(destination: MonthView()) {
-                        VStack {
-                            Image(systemName: "calendar")
-                            Text("Month")
-                        }
-                    }
-                    Spacer()
-                    Button(action: {}) {
-                        VStack {
-                            Image(systemName: "clock")
-                            Text("Today")
-                        }
-                    }
-                    Spacer()
-                    Button(action: {}) {
-                        VStack {
-                            Image(systemName: "gearshape")
-                            Text("Settings")
-                        }
-                    }
-                    Spacer()
+                BottomTabBar(
+                    mode: .month,
+                    onMonth: { showMonthView = true },
+                    onToday: { currentDate = Date() },
+                    onSettings: { showSettings = true }
+                )
+                .sheet(isPresented: $showMonthView) {
+                    MonthView(currentMonth: $currentDate)
                 }
-                .padding()
             }
             .padding()
         }
     }
 }
+
 
 #Preview {
     ContentView()
