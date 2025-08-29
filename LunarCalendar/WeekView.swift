@@ -14,46 +14,16 @@ struct WeekView: View {
         VStack(spacing: 8) {
             // Weekday header row
             HStack {
-                Text("Wk") // label for clarity
+                Text("Wk")
                     .font(.caption)
                     .foregroundColor(.secondary)
-                    .frame(width: 30, alignment: .leading)
+                    .frame(width: 30, alignment: .trailing)
                 
                 WeekdayHeaderView()
             }
             
-            // Week row with number
-            HStack {
-                // Week number
-                if let firstDay = days.first {
-                    let weekNum = Calendar.current.weekNumber(for: firstDay.date)
-                    Text("\(weekNum)")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                        .frame(width: 30, alignment: .leading)
-                }
-                
-                // Days in week
-                ForEach(days) { day in
-                    VStack(spacing: 4) {
-                        Text("\(day.gregorianDay)")
-                            .font(.headline)
-                            .foregroundColor(day.isToday ? .white :
-                                             (day.isInCurrentMonth ? .primary : .gray))
-                        
-                        Text(day.lunarDay)
-                            .font(.caption2)
-                            .foregroundColor(day.isToday ? .white : .secondary)
-                    }
-                    .frame(maxWidth: .infinity, minHeight: 60)
-                    .padding(6)
-                    .background(
-                        day.isToday ?
-                        Circle().fill(Color.blue) :
-                        Circle().fill(Color.clear)
-                    )
-                }
-            }
+            // Week row using WeekRowView
+            WeekRowView(week: days)
         }
     }
 }
