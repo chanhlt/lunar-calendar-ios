@@ -59,7 +59,7 @@ struct ContentView: View {
             .padding()
             
         }
-        .gesture(
+        .simultaneousGesture(
             DragGesture()
                 .onEnded { value in
                     if value.translation.height < -50 { // swipe up
