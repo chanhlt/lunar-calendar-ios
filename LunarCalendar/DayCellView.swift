@@ -25,7 +25,18 @@ struct DayCellView: View {
         .background(
             day.isToday ?
             Circle().fill(Color.blue) :
+            day.isSelected ?
+            Circle().fill(Color.cyan) :
             Circle().fill(Color.clear)
         )
     }
+}
+
+#Preview {
+    let calendar = Calendar.current
+    let today = calendar.lunarDay(for: Date(), current: Date())
+    let nextDay = calendar.date(byAdding: .day, value: 1, to: Date())
+    let tomorrow = calendar.lunarDay(for: nextDay ?? Date(), current: nextDay ?? Date())
+    DayCellView(day: tomorrow)
+    
 }

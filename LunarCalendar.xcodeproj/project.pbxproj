@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		C826DADD2E63E46300AB1574 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = C826DADC2E63E46300AB1574 /* SQLite */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		C8E1B5162E61E3D100CD6682 /* LunarCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LunarCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C826DADD2E63E46300AB1574 /* SQLite in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = LunarCalendar;
 			packageProductDependencies = (
+				C826DADC2E63E46300AB1574 /* SQLite */,
 			);
 			productName = LunarCalendar;
 			productReference = C8E1B5162E61E3D100CD6682 /* LunarCalendar.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = C8E1B50D2E61E3D100CD6682;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				C826DADB2E63E46300AB1574 /* XCRemoteSwiftPackageReference "SQLite" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C8E1B5172E61E3D100CD6682 /* Products */;
 			projectDirPath = "";
@@ -324,6 +333,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C826DADB2E63E46300AB1574 /* XCRemoteSwiftPackageReference "SQLite" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stephencelis/SQLite.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.15.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C826DADC2E63E46300AB1574 /* SQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C826DADB2E63E46300AB1574 /* XCRemoteSwiftPackageReference "SQLite" */;
+			productName = SQLite;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C8E1B50E2E61E3D100CD6682 /* Project object */;
 }

@@ -13,21 +13,47 @@ struct CalendarDay: Identifiable, Hashable {
     let lunarDay: String
     let isToday: Bool
     let isInCurrentMonth: Bool
+    let isSelected: Bool
 }
 
+let lunarDB = LunarDatabase()
+
+
+
+extension Date {
+    func lunarFormatted() -> String {
+        let lunar = lunarDB?.query(for: self)
+        let lunarDay = lunar?.lunarDay ?? 0
+        let lunarMonth = lunar?.lunarMonth ?? 0
+        let lunarYear = lunar?.lunarYear ?? 0
+        return "Lunar: \(lunarDay)/\(lunarMonth), Year: \(lunarYear)"
+    }
+}
 
 extension Calendar {
+    
+    func lunarDay(for date: Date, current d: Date) -> CalendarDay {
+        let lunar = lunarDB?.query(for: date)
+        let lunarDay = lunar?.lunarDay ?? 0
+        var lunarDayStr = "\(lunarDay)"
+        if lunarDay == 1 {
+            let lunarMonth = lunar?.lunarMonth ?? 0
+            lunarDayStr = "\(lunarDay)/\(lunarMonth)"
+        }
+        return CalendarDay(
+            date: date,
+            gregorianDay: component(.day, from: date),
+            lunarDay: lunarDayStr,
+            isToday: isDateInToday(date),
+            isInCurrentMonth: isDate(d, equalTo: date, toGranularity: .month),
+            isSelected: isDate(d, equalTo: date, toGranularity: .day)
+        )
+    }
     func weekDays(for date: Date) -> [CalendarDay] {
         let startOfWeek = self.startOfWeek(for: date)
         return (0..<7).map { offset in
             let d = self.date(byAdding: .day, value: offset, to: startOfWeek)!
-            return CalendarDay(
-                date: d,
-                gregorianDay: component(.day, from: d),
-                lunarDay: "11", // your lunar logic here
-                isToday: isDateInToday(d),
-                isInCurrentMonth: isDate(d, equalTo: date, toGranularity: .month)
-            )
+            return self.lunarDay(for: d, current: date)
         }
     }
     
@@ -45,18 +71,7 @@ extension Calendar {
         var current = fullRange.lowerBound
         
         while current <= fullRange.upperBound {
-            let day = component(.day, from: current)
-            let isToday = isDateInToday(current)
-            let inMonth = isDate(current, equalTo: date, toGranularity: .month)
-            
-            days.append(CalendarDay(
-                date: current,
-                gregorianDay: day,
-                lunarDay: "11",  // replace later with lunar calculation
-                isToday: isToday,
-                isInCurrentMonth: inMonth
-            ))
-            
+            days.append(self.lunarDay(for: current, current: date))
             current = self.date(byAdding: .day, value: 1, to: current)!
         }
         

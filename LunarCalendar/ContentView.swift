@@ -21,7 +21,7 @@ struct ContentView: View {
                     Text(currentDate.formatted(date: .long, time: .omitted))
                         .font(.headline)
                         .foregroundColor(.gray)
-                    Text("Lunar: 7th Month, 26th Day")
+                    Text(currentDate.lunarFormatted())
                         .font(.title2)
                         .fontWeight(.semibold)
                 }
