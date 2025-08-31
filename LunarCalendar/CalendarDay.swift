@@ -26,7 +26,7 @@ extension Date {
         let lunarDay = lunar?.lunarDay ?? 0
         let lunarMonth = lunar?.lunarMonth ?? 0
         let lunarYear = lunar?.lunarYear ?? 0
-        return "Lunar: \(lunarDay)/\(lunarMonth), Year: \(lunarYear)"
+        return "Lunar: Day: \(lunarDay), Month: \(lunarMonth) (\(lunarYear))"
     }
 }
 
