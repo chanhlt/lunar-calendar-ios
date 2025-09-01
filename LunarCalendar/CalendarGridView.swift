@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CalendarGridView: View {
     let days: [CalendarDay]
+    @Binding var currentDate: Date
     
     var body: some View {
         VStack(spacing: 8) {
@@ -24,7 +25,7 @@ struct CalendarGridView: View {
             
             // Weeks
             ForEach(weeks(from: days), id: \.self) { week in
-                WeekRowView(week: week)
+                WeekRowView(week: week, currentDate: $currentDate)
             }
         }
     }
@@ -39,5 +40,5 @@ struct CalendarGridView: View {
 
 #Preview {
     let monthDays = Calendar.current.monthDays(for: Date())
-    CalendarGridView(days: monthDays)
+    CalendarGridView(days: monthDays, currentDate: .constant(Date()))
 }

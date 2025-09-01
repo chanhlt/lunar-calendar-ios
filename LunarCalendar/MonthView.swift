@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MonthView: View {
     @Binding var currentMonth: Date
+    @Binding var currentDate: Date
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -30,7 +31,7 @@ struct MonthView: View {
             
             Divider()
             
-            CalendarGridView(days: Calendar.current.monthDays(for: currentMonth))
+            CalendarGridView(days: Calendar.current.monthDays(for: currentMonth), currentDate: $currentDate)
             
             Spacer()
             
@@ -75,5 +76,5 @@ struct MonthView: View {
 
 
 #Preview {
-    MonthView(currentMonth: .constant(Date()))
+    MonthView(currentMonth: .constant(Date()), currentDate: .constant(Date()))
 }

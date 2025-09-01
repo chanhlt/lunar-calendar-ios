@@ -8,6 +8,7 @@ import SwiftUI
 
 struct DayCellView: View {
     let day: CalendarDay
+    @Binding var currentDate: Date
     
     var body: some View {
         VStack(spacing: 4) {
@@ -22,14 +23,26 @@ struct DayCellView: View {
         }
         .frame(maxWidth: .infinity, minHeight: 60)
         .padding(6)
+        .contentShape(Rectangle()) // makes full cell tappable
+        .highPriorityGesture(
+                    TapGesture().onEnded {
+                        currentDate = day.date
+                    }
+                )
         .background(
             day.isToday ?
             Circle().fill(Color.blue) :
-            day.isSelected ?
+            isSelected ?
             Circle().fill(Color.cyan) :
             Circle().fill(Color.clear)
         )
+        
     }
+    
+    private var isSelected: Bool {
+        Calendar.current.isDate(day.date, inSameDayAs: currentDate)
+    }
+    
 }
 
 #Preview {
@@ -37,6 +50,6 @@ struct DayCellView: View {
     let today = calendar.lunarDay(for: Date(), current: Date())
     let nextDay = calendar.date(byAdding: .day, value: 1, to: Date())
     let tomorrow = calendar.lunarDay(for: nextDay ?? Date(), current: nextDay ?? Date())
-    DayCellView(day: tomorrow)
+    DayCellView(day: tomorrow, currentDate: .constant(nextDay ?? Date()))
     
 }

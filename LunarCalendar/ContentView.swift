@@ -74,7 +74,7 @@ struct ContentView: View {
                 }
         )
         .sheet(isPresented: $showMonthView) {
-            MonthView(currentMonth: $currentDate)
+            MonthView(currentMonth: $currentDate, currentDate: $currentDate)
         }
     }
 }
