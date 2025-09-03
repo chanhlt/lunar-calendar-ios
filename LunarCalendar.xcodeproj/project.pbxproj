@@ -16,9 +16,22 @@
 		C8E1B5162E61E3D100CD6682 /* LunarCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LunarCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		C85A3DA32E683925006A17E9 /* Exceptions for "LunarCalendar" folder in "LunarCalendar" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = C8E1B5152E61E3D100CD6682 /* LunarCalendar */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		C8E1B5182E61E3D100CD6682 /* LunarCalendar */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				C85A3DA32E683925006A17E9 /* Exceptions for "LunarCalendar" folder in "LunarCalendar" target */,
+			);
 			path = LunarCalendar;
 			sourceTree = "<group>";
 		};
