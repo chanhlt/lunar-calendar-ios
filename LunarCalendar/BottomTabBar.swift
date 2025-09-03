@@ -27,14 +27,14 @@ struct BottomTabBar: View {
                 Button(action: { onMonth?() }) {
                     VStack {
                         Image(systemName: "calendar")
-                        Text("Month")
+                        Text("month")
                     }
                 }
             } else {
                 Button(action: { onHome?() }) {
                     VStack {
                         Image(systemName: "house")
-                        Text("Home")
+                        Text("home")
                     }
                 }
             }
@@ -44,7 +44,7 @@ struct BottomTabBar: View {
             Button(action: onToday) {
                 VStack {
                     Image(systemName: "clock")
-                    Text("Today")
+                    Text("today")
                 }
             }
             
@@ -53,7 +53,7 @@ struct BottomTabBar: View {
             Button(action: onSettings) {
                 VStack {
                     Image(systemName: "gearshape")
-                    Text("Settings")
+                    Text("settings")
                 }
             }
             
@@ -61,4 +61,14 @@ struct BottomTabBar: View {
         }
         .padding()
     }
+}
+
+#Preview {
+    BottomTabBar(
+        mode: .home,
+        onHome: { print("Home tapped") },
+        onMonth: { print("Month tapped") },
+        onToday: { print("Today tapped") },
+        onSettings: { print("Settings tapped") }
+    )
 }

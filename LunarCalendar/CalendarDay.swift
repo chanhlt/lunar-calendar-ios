@@ -19,14 +19,26 @@ struct CalendarDay: Identifiable, Hashable {
 let lunarDB = LunarDatabase()
 
 
+extension LunarDate {
+    func formattedVietnamese() -> String {
+        // Tháng nhuận (leap month) formatting
+        let monthText = isLeapMonth
+            ? "Tháng \(lunarMonth) (nhuận)"
+            : "Tháng \(lunarMonth)"
+        
+        return "Âm lịch: Ngày \(lunarDay) \(monthText), Năm \(lunarYear)"
+    }
+}
+
 
 extension Date {
     func lunarFormatted() -> String {
         let lunar = lunarDB?.query(for: self)
-        let lunarDay = lunar?.lunarDay ?? 0
-        let lunarMonth = lunar?.lunarMonth ?? 0
-        let lunarYear = lunar?.lunarYear ?? 0
-        return "Lunar: Day: \(lunarDay), Month: \(lunarMonth) (\(lunarYear))"
+//        let lunarDay = lunar?.lunarDay ?? 0
+//        let lunarMonth = lunar?.lunarMonth ?? 0
+//        let lunarYear = lunar?.lunarYear ?? 0
+//        return "Lunar: Day: \(lunarDay), Month: \(lunarMonth) (\(lunarYear))"
+        return lunar?.formattedVietnamese() ?? ""
     }
 }
 

@@ -8,9 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		C826DADD2E63E46300AB1574 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = C826DADC2E63E46300AB1574 /* SQLite */; };
+		C85A3D3D2E6820FA006A17E9 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C85A3D3C2E6820FA006A17E9 /* Localizable.xcstrings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C85A3D3C2E6820FA006A17E9 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		C8E1B5162E61E3D100CD6682 /* LunarCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LunarCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -37,6 +39,7 @@
 		C8E1B50D2E61E3D100CD6682 = {
 			isa = PBXGroup;
 			children = (
+				C85A3D3C2E6820FA006A17E9 /* Localizable.xcstrings */,
 				C8E1B5182E61E3D100CD6682 /* LunarCalendar */,
 				C8E1B5172E61E3D100CD6682 /* Products */,
 			);
@@ -97,6 +100,7 @@
 			knownRegions = (
 				en,
 				Base,
+				vi,
 			);
 			mainGroup = C8E1B50D2E61E3D100CD6682;
 			minimizedProjectReferenceProxies = 1;
@@ -118,6 +122,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C85A3D3D2E6820FA006A17E9 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,6 +198,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -249,6 +255,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -264,8 +271,8 @@
 				DEVELOPMENT_TEAM = NAX8UY48F7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Lunar Calendar";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_FILE = LunarCalendar/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Lịch Âm";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -295,8 +302,8 @@
 				DEVELOPMENT_TEAM = NAX8UY48F7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Lunar Calendar";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_FILE = LunarCalendar/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Lịch Âm";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

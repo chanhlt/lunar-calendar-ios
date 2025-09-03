@@ -34,7 +34,7 @@ struct HomeWeekContainer: View {
     
     private var weekTitle: String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMM d"
+        formatter.dateFormat = "d MMMM"
         let start = Calendar.current.startOfWeek(for: currentDate)
         let end = Calendar.current.date(byAdding: .day, value: 6, to: start)!
         return "\(formatter.string(from: start)) – \(formatter.string(from: end))"
@@ -45,4 +45,8 @@ struct HomeWeekContainer: View {
             currentDate = newDate
         }
     }
+}
+
+#Preview {
+    HomeWeekContainer(currentDate: .constant(Date()))
 }

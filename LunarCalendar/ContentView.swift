@@ -22,7 +22,7 @@ struct ContentView: View {
                         .font(.headline)
                         .foregroundColor(.gray)
                     Text(currentDate.lunarFormatted())
-                        .font(.title2)
+                        .font(.headline)
                         .fontWeight(.semibold)
                 }
                 
@@ -82,4 +82,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .environment(\.locale, .init(identifier: "vi")) // 👈 Vietnamese preview
 }
