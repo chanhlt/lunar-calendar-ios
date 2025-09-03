@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeWeekContainer: View {
-    @Binding var currentDate: Date
+    @Binding var currentDate: CalendarDay
     
     var body: some View {
         VStack {
@@ -27,7 +27,7 @@ struct HomeWeekContainer: View {
             }
             .padding(.horizontal)
             
-            WeekView(days: Calendar.current.weekDays(for: currentDate), currentDate: $currentDate)
+            WeekView(days: Calendar.current.weekDays(for: currentDate.date), currentDate: $currentDate)
                 
         }
     }
@@ -35,18 +35,18 @@ struct HomeWeekContainer: View {
     private var weekTitle: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "d MMMM"
-        let start = Calendar.current.startOfWeek(for: currentDate)
+        let start = Calendar.current.startOfWeek(for: currentDate.date)
         let end = Calendar.current.date(byAdding: .day, value: 6, to: start)!
         return "\(formatter.string(from: start)) – \(formatter.string(from: end))"
     }
     
     private func changeWeek(by offset: Int) {
-        if let newDate = Calendar.current.date(byAdding: .weekOfYear, value: offset, to: currentDate) {
-            currentDate = newDate
+        if let newDate = Calendar.current.date(byAdding: .weekOfYear, value: offset, to: currentDate.date) {
+            currentDate = Calendar.current.lunarDay(for: newDate)
         }
     }
 }
 
 #Preview {
-    HomeWeekContainer(currentDate: .constant(Date()))
+    HomeWeekContainer(currentDate: .constant(Calendar.current.lunarDay(for: Date())))
 }

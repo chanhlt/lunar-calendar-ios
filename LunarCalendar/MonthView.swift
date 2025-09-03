@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct MonthView: View {
-    @Binding var currentMonth: Date
-    @Binding var currentDate: Date
+    @Binding var currentMonth: CalendarDay
+    @Binding var currentDate: CalendarDay
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -35,7 +35,7 @@ struct MonthView: View {
             
             Divider()
             
-            CalendarGridView(days: Calendar.current.monthDays(for: currentMonth), currentDate: $currentDate)
+            CalendarGridView(days: Calendar.current.monthDays(for: currentMonth.date), currentDate: $currentDate)
             
             Spacer()
             
@@ -44,7 +44,7 @@ struct MonthView: View {
                 onHome: { dismiss() },   // 👈 go back to Home
                 onToday: {
                     withAnimation {
-                        currentMonth = Date()
+                        currentMonth = Calendar.current.lunarDay(for: Date())
                     }
                 },
                 onSettings: { /* show settings */ }
@@ -60,12 +60,14 @@ struct MonthView: View {
                         .onEnded { value in
                             if value.translation.width < -50 {
                                 withAnimation{
-                                    currentMonth = Calendar.current.date(byAdding: .month, value: 1, to: currentMonth)!
+                                    let next = Calendar.current.date(byAdding: .month, value: 1, to: currentMonth.date)!
+                                    currentMonth = Calendar.current.lunarDay(for: next)
                                 }
                                 
                             } else if value.translation.width > 50 {
                                 withAnimation {
-                                    currentMonth = Calendar.current.date(byAdding: .month, value: -1, to: currentMonth)!
+                                    let prev = Calendar.current.date(byAdding: .month, value: -1, to: currentMonth.date)!
+                                    currentMonth = Calendar.current.lunarDay(for: prev)
                                 }
                                 
                             }
@@ -75,20 +77,21 @@ struct MonthView: View {
     }
     
     private func changeMonth(by value: Int) {
-        if let newMonth = Calendar.current.date(byAdding: .month, value: value, to: currentMonth) {
-            currentMonth = newMonth
+        if let newMonth = Calendar.current.date(byAdding: .month, value: value, to: currentMonth.date) {
+            currentMonth = Calendar.current.lunarDay(for: newMonth)
         }
     }
     
-    private func monthYearString(for date: Date) -> String {
+    private func monthYearString(for date: CalendarDay) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM yyyy"
-        return formatter.string(from: date)
+        return formatter.string(from: date.date)
     }
 }
 
 
 
 #Preview {
-    MonthView(currentMonth: .constant(Date()), currentDate: .constant(Date()))
+    let currentDate = Calendar.current.lunarDay(for: Date())
+    MonthView(currentMonth: .constant(currentDate), currentDate: .constant(currentDate))
 }

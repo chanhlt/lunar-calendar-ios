@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var currentDate: Date = Date()
+    @State private var currentDate  = Calendar.current.lunarDay(for: Date())
     @State private var showMonthView = false
     @State private var showSettings = false
     
@@ -18,33 +18,20 @@ struct ContentView: View {
                 
                 // Header with today’s date
                 VStack {
-                    Text(currentDate.formatted(date: .long, time: .omitted))
+                    Text(currentDate.date.formatted(date: .long, time: .omitted))
                         .font(.headline)
                         .foregroundColor(.gray)
-                    Text(currentDate.lunarFormatted())
+                    Text(currentDate.date.lunarFormatted())
                         .font(.headline)
                         .fontWeight(.semibold)
                 }
                 
                 // Week container bound to currentDate
                 HomeWeekContainer(currentDate: $currentDate)
-                    
                 
-                // Moon phase / festival highlight
-                HStack {
-                    Image(systemName: "moon.stars.fill")
-                        .font(.largeTitle)
-                    VStack(alignment: .leading) {
-                        Text("Today's Moon Phase")
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                        Text("Waning Gibbous")
-                            .font(.headline)
-                    }
-                    Spacer()
+                if currentDate.isHoliday {
+                    HolidayView(currentDate: $currentDate)
                 }
-                .padding()
-                .background(RoundedRectangle(cornerRadius: 20).fill(Color(.secondarySystemBackground)))
                 
                 Spacer()
                 
@@ -54,7 +41,7 @@ struct ContentView: View {
                     onMonth: { showMonthView = true },
                     onToday: {
                         withAnimation {
-                            currentDate = Date()
+                            currentDate = Calendar.current.lunarDay(for: Date())
                         }
                     },
                     onSettings: { showSettings = true }
@@ -71,13 +58,15 @@ struct ContentView: View {
                     } else if value.translation.width < -50 {
                         withAnimation {
                             // swipe left → next week
-                            currentDate = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: currentDate)!
+                            let next = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: currentDate.date)!
+                            currentDate = Calendar.current.lunarDay(for: next)
                         }
                         
                     } else if value.translation.width > 50 {
                         withAnimation {
                             // swipe right → previous week
-                            currentDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: currentDate)!
+                            let prev = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: currentDate.date)!
+                            currentDate = Calendar.current.lunarDay(for: prev)
                         }
                         
                     }
