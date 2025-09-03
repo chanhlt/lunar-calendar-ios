@@ -23,8 +23,6 @@ struct CalendarDay: Identifiable, Hashable {
     let gregorianDay: Int
     let lunarDay: String
     let isToday: Bool
-    let isInCurrentMonth: Bool
-    let isCurrentDate: Bool
     let holidayName: String?
     let isHoliday: Bool
 }
@@ -67,6 +65,16 @@ extension LunarDate {
 
 }
 
+extension CalendarDay {
+    
+    func isInMonth(_ month: CalendarDay) -> Bool {
+        return Calendar.current.isDate(month.date, equalTo: date, toGranularity: .month)
+    }
+    
+    func isSameDate(_ other: CalendarDay) -> Bool {
+        return Calendar.current.isDate(date, inSameDayAs: other.date)
+    }
+}
 
 extension Date {
     func lunarFormatted() -> String {
@@ -81,7 +89,7 @@ extension Date {
 
 extension Calendar {
     
-    func lunarDay(for date: Date, current currentDate: Date = Date()) -> CalendarDay {
+    func lunarDay(for date: Date = Date(), current currentDate: Date = Date()) -> CalendarDay {
         let lunar = date.toLunar()
         let lunarDay = lunar?.lunarDay ?? 0
         var lunarDayStr = "\(lunarDay)"
@@ -95,8 +103,6 @@ extension Calendar {
             gregorianDay: component(.day, from: date),
             lunarDay: lunarDayStr,
             isToday: isDateInToday(date),
-            isInCurrentMonth: isDate(currentDate, equalTo: date, toGranularity: .month),
-            isCurrentDate: Calendar.current.isDate(date, inSameDayAs: currentDate),
             holidayName: holidayName,
             isHoliday: holidayName != nil
         )

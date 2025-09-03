@@ -18,7 +18,9 @@ let vietnamHolidays: [Holiday] = [
     Holiday(name: "Quốc tế Lao động", solarDate: DateComponents(month: 5, day: 1), lunarDate: nil),
     Holiday(name: "Quốc khánh", solarDate: DateComponents(month: 9, day: 2), lunarDate: nil),
 
-    Holiday(name: "Tết Nguyên Đán", solarDate: nil, lunarDate: (1, 1)),
+    Holiday(name: "Mùng 1 Tết", solarDate: nil, lunarDate: (1, 1)),
+    Holiday(name: "Mùng 2 Tết", solarDate: nil, lunarDate: (2, 1)),
+    Holiday(name: "Mùng 3 Tết", solarDate: nil, lunarDate: (3, 1)),
     Holiday(name: "Giỗ Tổ Hùng Vương", solarDate: nil, lunarDate: (10, 3)),
     Holiday(name: "Tết Trung Thu", solarDate: nil, lunarDate: (15, 8))
 ]

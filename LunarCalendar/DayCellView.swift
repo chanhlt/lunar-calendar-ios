@@ -9,22 +9,23 @@ import SwiftUI
 struct DayCellView: View {
     let day: CalendarDay
     @Binding var currentDate: CalendarDay
+    @Binding var currentMonth: CalendarDay
     
     var body: some View {
         VStack(spacing: 4) {
             Text("\(day.gregorianDay)")
                 .font(.headline)
                 .foregroundColor(
-                    day.isHoliday ? .red :
-                    day.isToday || day.isCurrentDate ? .white :
-                                 (day.isInCurrentMonth ? .primary : .gray))
+                    day.isToday || day.isSameDate($currentDate.wrappedValue) ? .white :
+                        day.isHoliday ? .red :
+                        day.isInMonth($currentMonth.wrappedValue) ? .primary : .gray)
             
             Text(day.lunarDay)
                 .font(.caption2)
                 .foregroundColor(
-                    day.isHoliday ? .red :
-                    day.isToday || day.isCurrentDate ? .white :
-                                    (day.isInCurrentMonth ? .primary : .gray))
+                    day.isToday || day.isSameDate($currentDate.wrappedValue) ? .white :
+                        day.isHoliday ? .red :
+                        day.isInMonth($currentMonth.wrappedValue) ? .primary : .gray)
         }
         .frame(maxWidth: .infinity, minHeight: 60)
         .padding(6)
@@ -36,7 +37,7 @@ struct DayCellView: View {
                 )
         .background(
             day.isToday ? Circle().fill(Color.blue) :
-                day.isCurrentDate ? Circle().fill(Color.secondary) :
+                day.isSameDate($currentDate.wrappedValue) ? Circle().fill(Color.secondary) :
                 Circle().fill(Color.clear)
         )
         
@@ -49,6 +50,7 @@ struct DayCellView: View {
     let today = calendar.lunarDay(for: Date(), current: Date())
     let nextDay = calendar.date(byAdding: .day, value: 1, to: Date())
     let tomorrow = calendar.lunarDay(for: nextDay ?? Date(), current: nextDay ?? Date())
-    DayCellView(day: tomorrow, currentDate: .constant(Calendar.current.lunarDay(for: nextDay ?? Date())))
+    let currentDate = Calendar.current.lunarDay(for: nextDay ?? Date())
+    DayCellView(day: tomorrow, currentDate: .constant(currentDate), currentMonth: .constant(currentDate))
     
 }

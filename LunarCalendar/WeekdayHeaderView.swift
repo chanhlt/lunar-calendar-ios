@@ -24,3 +24,8 @@ struct WeekdayHeaderView: View {
         return symbols[(index + first) % 7]
     }
 }
+
+
+#Preview {
+    WeekdayHeaderView()
+}
