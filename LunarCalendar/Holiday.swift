@@ -25,20 +25,20 @@ let vietnamHolidays: [Holiday] = [
     Holiday(name: "Tết Trung Thu", solarDate: nil, lunarDate: (15, 8))
 ]
 
-func holiday(for date: Date) -> String? {
+func holiday(for date: Date) -> Holiday? {
     let calendar = Calendar.current
     let components = calendar.dateComponents([.day, .month], from: date)
     
     for holiday in vietnamHolidays {
         if let solar = holiday.solarDate,
            solar.day == components.day && solar.month == components.month {
-            return holiday.name
+            return holiday
         }
         
         if let lunar = holiday.lunarDate {
             if let lunarDate = date.toLunar() {
                 if lunarDate.lunarDay == lunar.day && lunarDate.lunarMonth == lunar.month {
-                    return holiday.name
+                    return holiday
                 }
             }
         }

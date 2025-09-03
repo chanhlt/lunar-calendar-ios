@@ -18,7 +18,7 @@ struct DetailView: View {
             Text(currentDate.date.formatted(date: .long, time: .omitted))
                 .font(.headline)
                 .foregroundColor(.gray)
-            Text(currentDate.date.lunarFormatted())
+            Text("Âm lịch: \(currentDate.date.lunarFormatted())")
                 .font(.headline)
                 .fontWeight(.semibold)
                 .padding(.vertical, 5)

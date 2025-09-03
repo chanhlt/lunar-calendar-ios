@@ -17,10 +17,11 @@ struct HolidayView: View {
                 .font(.largeTitle)
                 .foregroundColor(.red)
             VStack(alignment: .leading) {
-                Text(currentDate.date.formatted(date: .long, time: .omitted))
+                let (name, formatted) = currentDate.toHoliday()!
+                Text(formatted)
                     .font(.subheadline)
                     .foregroundColor(.gray)
-                Text(currentDate.holidayName ?? "Unknown")
+                Text(name)
                     .font(.headline)
             }
             Spacer()

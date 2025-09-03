@@ -8,7 +8,7 @@
 import Foundation
 import SQLite
 
-struct LunarDate {
+struct LunarDate: Hashable {
     let solarDate: String
     let lunarYear: Int
     let lunarMonth: Int
