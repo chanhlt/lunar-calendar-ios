@@ -14,12 +14,13 @@ struct DayCellView: View {
         VStack(spacing: 4) {
             Text("\(day.gregorianDay)")
                 .font(.headline)
-                .foregroundColor(day.isToday ? .white :
+                .foregroundColor(day.isToday || day.isCurrentDate ? .white :
                                  (day.isInCurrentMonth ? .primary : .gray))
             
             Text(day.lunarDay)
                 .font(.caption2)
-                .foregroundColor(day.isToday ? .white : .secondary)
+                .foregroundColor(day.isToday || day.isCurrentDate ? .white :
+                                    (day.isInCurrentMonth ? .primary : .gray))
         }
         .frame(maxWidth: .infinity, minHeight: 60)
         .padding(6)
@@ -31,16 +32,9 @@ struct DayCellView: View {
                 )
         .background(
             day.isToday ?
-            Circle().fill(Color.blue) :
-            isSelected ?
-            Circle().fill(Color.cyan) :
-            Circle().fill(Color.clear)
+                Circle().fill(Color.blue) : day.isCurrentDate ? Circle().fill(Color.cyan) : Circle().fill(Color.clear)
         )
         
-    }
-    
-    private var isSelected: Bool {
-        Calendar.current.isDate(day.date, inSameDayAs: currentDate)
     }
     
 }

@@ -24,7 +24,8 @@ struct CalendarDay: Identifiable, Hashable {
     let lunarDay: String
     let isToday: Bool
     let isInCurrentMonth: Bool
-    let isSelected: Bool
+    let isCurrentDate: Bool
+    let holidayName: String?
 }
 
 let lunarDB = LunarDatabase()
@@ -69,18 +70,18 @@ extension LunarDate {
 extension Date {
     func lunarFormatted() -> String {
         let lunar = lunarDB?.query(for: self)
-//        let lunarDay = lunar?.lunarDay ?? 0
-//        let lunarMonth = lunar?.lunarMonth ?? 0
-//        let lunarYear = lunar?.lunarYear ?? 0
-//        return "Lunar: Day: \(lunarDay), Month: \(lunarMonth) (\(lunarYear))"
         return lunar?.formattedVietnamese() ?? ""
+    }
+    
+    func toLunar() -> LunarDate? {
+        return lunarDB?.query(for: self)
     }
 }
 
 extension Calendar {
     
-    func lunarDay(for date: Date, current d: Date) -> CalendarDay {
-        let lunar = lunarDB?.query(for: date)
+    func lunarDay(for date: Date, current currentDate: Date) -> CalendarDay {
+        let lunar = date.toLunar()
         let lunarDay = lunar?.lunarDay ?? 0
         var lunarDayStr = "\(lunarDay)"
         if lunarDay == 1 {
@@ -92,10 +93,12 @@ extension Calendar {
             gregorianDay: component(.day, from: date),
             lunarDay: lunarDayStr,
             isToday: isDateInToday(date),
-            isInCurrentMonth: isDate(d, equalTo: date, toGranularity: .month),
-            isSelected: isDate(d, equalTo: date, toGranularity: .day)
+            isInCurrentMonth: isDate(currentDate, equalTo: date, toGranularity: .month),
+            isCurrentDate: Calendar.current.isDate(date, inSameDayAs: currentDate),
+            holidayName: holiday(for: date)
         )
     }
+    
     func weekDays(for date: Date) -> [CalendarDay] {
         let startOfWeek = self.startOfWeek(for: date)
         return (0..<7).map { offset in
