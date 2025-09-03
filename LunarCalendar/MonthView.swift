@@ -17,6 +17,8 @@ struct MonthView: View {
             HStack {
                 Button(action: { changeMonth(by: -1) }) {
                     Image(systemName: "chevron.left")
+                        .frame(width: 44, height: 44) // 👈 minimum tap area
+                        .contentShape(Rectangle())    // 👈 ensures full frame is tappable
                 }
                 Spacer()
                 Text(monthYearString(for: currentMonth))
@@ -25,6 +27,8 @@ struct MonthView: View {
                 Spacer()
                 Button(action: { changeMonth(by: 1) }) {
                     Image(systemName: "chevron.right")
+                        .frame(width: 44, height: 44) // 👈 minimum tap area
+                        .contentShape(Rectangle())    // 👈 ensures full frame is tappable
                 }
             }
             .padding()
@@ -38,7 +42,11 @@ struct MonthView: View {
             BottomTabBar(
                 mode: .home,
                 onHome: { dismiss() },   // 👈 go back to Home
-                onToday: { currentMonth = Date() },
+                onToday: {
+                    withAnimation {
+                        currentMonth = Date()
+                    }
+                },
                 onSettings: { /* show settings */ }
             )
 
@@ -51,9 +59,15 @@ struct MonthView: View {
                     DragGesture()
                         .onEnded { value in
                             if value.translation.width < -50 {
-                                currentMonth = Calendar.current.date(byAdding: .month, value: 1, to: currentMonth)!
+                                withAnimation{
+                                    currentMonth = Calendar.current.date(byAdding: .month, value: 1, to: currentMonth)!
+                                }
+                                
                             } else if value.translation.width > 50 {
-                                currentMonth = Calendar.current.date(byAdding: .month, value: -1, to: currentMonth)!
+                                withAnimation {
+                                    currentMonth = Calendar.current.date(byAdding: .month, value: -1, to: currentMonth)!
+                                }
+                                
                             }
                         }
                 )

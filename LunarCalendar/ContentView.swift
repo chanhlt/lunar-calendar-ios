@@ -52,7 +52,11 @@ struct ContentView: View {
                 BottomTabBar(
                     mode: .month,
                     onMonth: { showMonthView = true },
-                    onToday: { currentDate = Date() },
+                    onToday: {
+                        withAnimation {
+                            currentDate = Date()
+                        }
+                    },
                     onSettings: { showSettings = true }
                 )
             }
@@ -65,11 +69,17 @@ struct ContentView: View {
                     if value.translation.height < -50 { // swipe up
                         showMonthView = true
                     } else if value.translation.width < -50 {
-                        // swipe left → next week
-                        currentDate = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: currentDate)!
+                        withAnimation {
+                            // swipe left → next week
+                            currentDate = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: currentDate)!
+                        }
+                        
                     } else if value.translation.width > 50 {
-                        // swipe right → previous week
-                        currentDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: currentDate)!
+                        withAnimation {
+                            // swipe right → previous week
+                            currentDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: currentDate)!
+                        }
+                        
                     }
                 }
         )
