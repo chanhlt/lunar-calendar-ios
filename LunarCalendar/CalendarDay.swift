@@ -6,6 +6,17 @@
 //
 import Foundation
 
+let thienCan = [
+    "Giáp", "Ất", "Bính", "Đinh", "Mậu",
+    "Kỷ", "Canh", "Tân", "Nhâm", "Quý"
+]
+
+let diaChi = [
+    "Tý", "Sửu", "Dần", "Mão", "Thìn", "Tỵ",
+    "Ngọ", "Mùi", "Thân", "Dậu", "Tuất", "Hợi"
+]
+
+
 struct CalendarDay: Identifiable, Hashable {
     var id: Date { date }   // unique per day
     let date: Date
@@ -21,13 +32,37 @@ let lunarDB = LunarDatabase()
 
 extension LunarDate {
     func formattedVietnamese() -> String {
-        // Tháng nhuận (leap month) formatting
-        let monthText = isLeapMonth
-            ? "Tháng \(lunarMonth) (nhuận)"
-            : "Tháng \(lunarMonth)"
-        
-        return "Âm lịch: Ngày \(lunarDay) \(monthText), Năm \(lunarYear)"
+        let dayStr = lunarDayStr()
+        let monthStr = lunarMonthStr()
+        let year = lunarYearName()
+        return "Âm lịch: \(dayStr) \(monthStr), \(year)"
     }
+    
+    func lunarYearName() -> String {
+        let can = thienCan[(lunarYear + 6) % 10]   // offset so 1984 = Giáp Tý
+        let chi = diaChi[(lunarYear + 8) % 12]
+        return "\(can) \(chi)"
+    }
+    
+    func lunarDayStr() -> String {
+        let dayPrefix = lunarDay <= 10 ? "mùng " : ""
+        let dayStr = "\(dayPrefix)\(lunarDay)"
+        return dayStr
+    }
+    
+    func lunarMonthStr() -> String {
+        let monthText = isLeapMonth
+            ? "\(lunarMonth) (nhuận)"
+            : "\(lunarMonth)"
+        let monthStr: String
+            switch lunarMonth {
+            case 1:  monthStr = "tháng Giêng"
+            case 12: monthStr = "tháng Chạp"
+            default: monthStr = "tháng \(monthText)"
+            }
+        return monthStr
+    }
+
 }
 
 
