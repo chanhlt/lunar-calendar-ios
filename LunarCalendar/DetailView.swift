@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-struct DayView: View {
+struct DetailView: View {
     @Binding var currentDate: CalendarDay
     @Binding var currentMonth: CalendarDay
     var onToday: () -> Void
@@ -47,7 +47,7 @@ struct DayView: View {
             
             
             // Bottom Navigation
-            BottomTabBar(
+            MenuView(
                 mode: .home,
                 onHome: { dismiss() },
                 onToday: onToday,
@@ -79,7 +79,7 @@ struct DayView: View {
     let currentDate = Calendar.current.lunarDay(
         for: Calendar.current.date(from: DateComponents(year: 2025, month: 9, day: 2))!
     )
-    DayView(
+    DetailView(
         currentDate: .constant(currentDate),
         currentMonth: .constant(currentDate),
         onToday: { },

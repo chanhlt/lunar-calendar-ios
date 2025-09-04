@@ -25,7 +25,7 @@ struct HomeView: View {
                     onSwipeRight: prevMonth
                 )
                 
-                BottomTabBar(
+                MenuView(
                     mode: .month,
                     onMonth: { },
                     onToday: { withAnimation { onToday() } },
@@ -38,7 +38,7 @@ struct HomeView: View {
         }
         .contentShape(Rectangle())
         .sheet(isPresented: $showDetailView) {
-            DayView(
+            DetailView(
                 currentDate: $currentDate,
                 currentMonth: $currentMonth,
                 onToday: { withAnimation { onToday() } },

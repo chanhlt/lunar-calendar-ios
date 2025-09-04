@@ -30,7 +30,6 @@ struct WeekRowView: View {
 
 
 #Preview {
-    // Example: generate 7 days starting from today
     let weekDays = Calendar.current.weekDays(for: Date())
     let currentDate = Calendar.current.lunarDay(for: Date())
     WeekRowView(week: weekDays, currentDate: .constant(currentDate), currentMonth: .constant(currentDate))

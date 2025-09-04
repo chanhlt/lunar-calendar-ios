@@ -33,10 +33,8 @@ struct HolidayView: View {
 }
 
 #Preview {
-    let nationalDay = Calendar.current.lunarDay(for: Calendar.current.date(from: DateComponents(
-        year: 2025,
-        month: 9,
-        day: 2
-    ))!)
-    HolidayView(currentDate: .constant(nationalDay))
+    let currentDate = Calendar.current.lunarDay(
+        for: Calendar.current.date(from: DateComponents(year: 2025, month: 9, day: 2))!
+    )
+    HolidayView(currentDate: .constant(currentDate))
 }

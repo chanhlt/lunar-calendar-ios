@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-enum TabBarMode {
+enum MenuMode {
     case home
     case month
 }
 
-struct BottomTabBar: View {
-    var mode: TabBarMode
+struct MenuView: View {
+    var mode: MenuMode
     var onHome: (() -> Void)? = nil
     var onMonth: (() -> Void)? = nil
     var onToday: () -> Void
@@ -64,7 +64,7 @@ struct BottomTabBar: View {
 }
 
 #Preview {
-    BottomTabBar(
+    MenuView(
         mode: .home,
         onHome: { print("Home tapped") },
         onMonth: { print("Month tapped") },
