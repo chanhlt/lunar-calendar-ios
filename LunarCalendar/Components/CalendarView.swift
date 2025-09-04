@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CalenedarView<Content: View>: View {
+struct CalendarView<Content: View>: View {
     
     
     @Binding var currentDate: CalendarDay
@@ -72,7 +72,7 @@ struct CalenedarView<Content: View>: View {
 #Preview {
     let currentDate = Calendar.current.lunarDay()
     
-    CalenedarView(
+    CalendarView(
         currentDate: .constant(currentDate),
         onNavigate: { offset in
             print("\(offset)")
@@ -87,7 +87,7 @@ struct CalenedarView<Content: View>: View {
         MonthView(days: days, currentDate: .constant(currentDate))
     }
     
-    CalenedarView(
+    CalendarView(
         currentDate: .constant(currentDate),
         onNavigate: { offset in
             print("\(offset)")

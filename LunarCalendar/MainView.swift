@@ -13,7 +13,7 @@ struct MainView: View {
     var onSwipeUp: (() -> Void)?
     
     var body: some View {
-        CalenedarView(
+        CalendarView(
             currentDate: $currentDate,
             onNavigate: changeMonth,
             formatTitle: monthYearString,

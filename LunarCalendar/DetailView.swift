@@ -23,7 +23,7 @@ struct DetailView: View {
                 .fontWeight(.semibold)
                 .padding(.vertical, 5)
             
-            CalenedarView(
+            CalendarView(
                 currentDate: $currentDate,
                 onNavigate: changeWeek,
                 formatTitle: formatWeek,
