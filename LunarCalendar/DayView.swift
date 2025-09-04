@@ -23,8 +23,6 @@ struct DayView: View {
                 .fontWeight(.semibold)
                 .padding(.vertical, 5)
             
-//            // Week container bound to currentDate
-//            WeekContainer(currentDate: $currentDate, currentMonth: $currentMonth)
             CalenedarView(currentDate: $currentDate, currentMonth: $currentMonth, onNavigate: changeWeek, formatTitle: formatWeek) {
                 let days = Calendar.current.weekDays(for: currentDate.date)
                 WeekView(days: days, currentDate: $currentDate, currentMonth: $currentMonth)
@@ -54,11 +52,17 @@ struct DayView: View {
     }
     
     private func changeWeek(_ by: Int) {
-        
+        if let newDate = Calendar.current.date(byAdding: .weekOfYear, value: by, to: currentMonth.date) {
+            currentMonth = Calendar.current.lunarDay(for: newDate)
+        }
     }
     
     private func formatWeek(_ date: CalendarDay) -> String {
-        return ""
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d MMM"
+        let start = Calendar.current.startOfWeek(for: currentDate.date)
+        let end = Calendar.current.date(byAdding: .day, value: 6, to: start)!
+        return "\(formatter.string(from: start)) – \(formatter.string(from: end))"
     }
 }
 

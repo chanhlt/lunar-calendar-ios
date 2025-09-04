@@ -59,7 +59,7 @@ struct HomeView: View {
                 }
         )
         .sheet(isPresented: $showDetailView) {
-            DetailView(currentDate: $currentDate, currentMonth: $currentMonth)
+            DayView(currentDate: $currentDate, currentMonth: $currentMonth)
         }
     }
 }

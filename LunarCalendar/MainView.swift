@@ -13,35 +13,9 @@ struct MainView: View {
     @Binding var currentMonth: CalendarDay
     
     var body: some View {
-        VStack {
-            HStack {
-                Button(action: { changeMonth(by: -1) }) {
-                    Image(systemName: "chevron.left")
-                        .frame(width: 44, height: 44)
-                        .contentShape(Rectangle())
-                }
-                Spacer()
-                Text(monthYearString(for: currentMonth))
-                    .font(.title2)
-                    .fontWeight(.bold)
-                Spacer()
-                Button(action: { changeMonth(by: 1) }) {
-                    Image(systemName: "chevron.right")
-                        .frame(width: 44, height: 44)
-                        .contentShape(Rectangle())
-                }
-            }
-            .padding()
-            
-            Divider()
-            
+        CalenedarView(currentDate: $currentDate, currentMonth: $currentMonth, onNavigate: changeMonth, formatTitle: monthYearString) {
             let days = Calendar.current.monthDays(for: currentMonth.date)
             MonthView(days: days, currentDate: $currentDate, currentMonth: $currentMonth)
-            
-            Spacer()
-            
-            
-        
         }
     }
     
