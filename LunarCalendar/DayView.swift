@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-struct DetailView: View {
+struct DayView: View {
     @Binding var currentDate: CalendarDay
     @Binding var currentMonth: CalendarDay
     @Environment(\.dismiss) private var dismiss
@@ -23,8 +23,12 @@ struct DetailView: View {
                 .fontWeight(.semibold)
                 .padding(.vertical, 5)
             
-            // Week container bound to currentDate
-            WeekContainer(currentDate: $currentDate, currentMonth: $currentMonth)
+//            // Week container bound to currentDate
+//            WeekContainer(currentDate: $currentDate, currentMonth: $currentMonth)
+            CalenedarView(currentDate: $currentDate, currentMonth: $currentMonth, onNavigate: changeWeek, formatTitle: formatWeek) {
+                let days = Calendar.current.weekDays(for: currentDate.date)
+                WeekView(days: days, currentDate: $currentDate, currentMonth: $currentMonth)
+            }
             
             if currentDate.isHoliday {
                 HolidayView(currentDate: $currentDate)
@@ -46,32 +50,20 @@ struct DetailView: View {
             )
         }
         .padding()
-//        .contentShape(Rectangle())
-//        .simultaneousGesture(
-//            DragGesture()
-//                .onEnded { value in
-//                    if value.translation.width < -50 {
-//                        withAnimation {
-//                            let next = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: currentMonth.date)!
-//                            currentMonth = Calendar.current.lunarDay(for: next)
-//                        }
-//                        
-//                    } else if value.translation.width > 50 {
-//                        withAnimation {
-//                            let prev = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: currentMonth.date)!
-//                            currentMonth = Calendar.current.lunarDay(for: prev)
-//                        }
-//                        
-//                    }
-//                }
-//        )
-//        
         
+    }
+    
+    private func changeWeek(_ by: Int) {
+        
+    }
+    
+    private func formatWeek(_ date: CalendarDay) -> String {
+        return ""
     }
 }
 
 
 #Preview {
     let currentDate = Calendar.current.lunarDay()
-    DetailView(currentDate: .constant(currentDate), currentMonth: .constant(currentDate))
+    DayView(currentDate: .constant(currentDate), currentMonth: .constant(currentDate))
 }
