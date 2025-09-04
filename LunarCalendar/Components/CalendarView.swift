@@ -43,13 +43,8 @@ struct CalenedarView<Content: View>: View {
             
             content()
             
-            Spacer()
-            
-            
         }
     }
-    
-    
     
 }
 

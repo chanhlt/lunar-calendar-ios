@@ -17,7 +17,7 @@ struct HolidayView: View {
                 .font(.largeTitle)
                 .foregroundColor(.red)
             VStack(alignment: .leading) {
-                let (name, formatted) = currentDate.toHoliday()!
+                let (name, formatted) = currentDate.toHoliday() ?? ("Unknown", "Unknown")
                 Text(formatted)
                     .font(.subheadline)
                     .foregroundColor(.gray)
@@ -33,7 +33,10 @@ struct HolidayView: View {
 }
 
 #Preview {
-    let today = Calendar.current.lunarDay(for: Date())
-    let yesterday = Calendar.current.lunarDay(for: Calendar.current.date(byAdding: .day, value: -1, to: today.date)!)
-    HolidayView(currentDate: .constant(yesterday))
+    let nationalDay = Calendar.current.lunarDay(for: Calendar.current.date(from: DateComponents(
+        year: 2025,
+        month: 9,
+        day: 2
+    ))!)
+    HolidayView(currentDate: .constant(nationalDay))
 }

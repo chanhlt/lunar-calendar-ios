@@ -17,6 +17,7 @@ struct MainView: View {
             let days = Calendar.current.monthDays(for: currentMonth.date)
             MonthView(days: days, currentDate: $currentDate, currentMonth: $currentMonth)
         }
+        Spacer()
     }
     
     
