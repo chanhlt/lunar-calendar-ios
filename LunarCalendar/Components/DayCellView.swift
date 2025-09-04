@@ -11,36 +11,39 @@ struct DayCellView: View {
     @Binding var currentDate: CalendarDay
     
     var body: some View {
+        let textColor = selectTextColor()
+        let bgColor = selectBackgroundColor()
         VStack(spacing: 0) {
             Text("\(day.gregorianDay)")
                 .font(.system(size: 20))
                 .bold()
-                .foregroundColor(
-                    day.isToday || day.isSameDate($currentDate.wrappedValue) ? .white :
-                        day.isHoliday ? .red :
-                        day.isInMonth($currentDate.wrappedValue) ? .primary : .gray)
-            
+                .foregroundColor(textColor)
             Text(day.lunarDay)
                 .font(.system(size: 10))
-                .foregroundColor(
-                    day.isToday || day.isSameDate($currentDate.wrappedValue) ? .white :
-                        day.isHoliday ? .red :
-                        day.isInMonth($currentDate.wrappedValue) ? .primary : .gray)
+                .foregroundColor(textColor)
         }
         .frame(maxWidth: .infinity, minHeight: 60)
         .padding(1)
-        .contentShape(Rectangle()) // makes full cell tappable
+        .contentShape(Rectangle())
         .highPriorityGesture(
                     TapGesture().onEnded {
                         currentDate = day
                     }
                 )
-        .background(
-            day.isToday ? Circle().fill(Color.blue) :
-                day.isSameDate($currentDate.wrappedValue) ? Circle().fill(Color.secondary) :
-                Circle().fill(Color.clear)
-        )
+        .background(Circle().fill(bgColor))
         
+    }
+    
+    private func selectTextColor() -> Color {
+        return day.isToday || day.isSameDate($currentDate.wrappedValue) ? .white :
+        day.isHoliday ? .red :
+        day.isInMonth($currentDate.wrappedValue) ? .primary : .gray
+    }
+    
+    private func selectBackgroundColor() -> Color {
+        return day.isToday ? .blue :
+        day.isSameDate($currentDate.wrappedValue) ? .secondary :
+        .clear
     }
     
 }
