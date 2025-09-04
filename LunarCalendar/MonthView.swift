@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CalendarGridView: View {
+struct MonthView: View {
     let days: [CalendarDay]
     @Binding var currentDate: CalendarDay
     @Binding var currentMonth: CalendarDay
@@ -15,14 +15,7 @@ struct CalendarGridView: View {
     var body: some View {
         VStack(spacing: 8) {
             // Header row
-            HStack {
-                Text("Wk")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .frame(width: 30, alignment: .trailing)
-                
-                WeekdayHeaderView()
-            }
+            WeekdayHeaderView()
             
             // Weeks
             ForEach(weeks(from: days), id: \.self) { week in
@@ -42,5 +35,5 @@ struct CalendarGridView: View {
 #Preview {
     let monthDays = Calendar.current.monthDays(for: Date())
     let currentDate = Calendar.current.lunarDay()
-    CalendarGridView(days: monthDays, currentDate: .constant(currentDate), currentMonth: .constant(currentDate))
+    MonthView(days: monthDays, currentDate: .constant(currentDate), currentMonth: .constant(currentDate))
 }

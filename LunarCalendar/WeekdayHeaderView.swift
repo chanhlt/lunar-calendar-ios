@@ -9,13 +9,21 @@ import SwiftUI
 struct WeekdayHeaderView: View {
     var body: some View {
         HStack {
-            ForEach(0..<7, id: \.self) { index in
-                Text(shortWeekday(for: index))
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .frame(maxWidth: .infinity)
+            Text("Wk")
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .frame(width: 25, alignment: .trailing)
+            
+            HStack {
+                ForEach(0..<7, id: \.self) { index in
+                    Text(shortWeekday(for: index))
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity)
+                }
             }
         }
+        
     }
     
     private func shortWeekday(for index: Int) -> String {

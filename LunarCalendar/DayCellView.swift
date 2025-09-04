@@ -12,23 +12,24 @@ struct DayCellView: View {
     @Binding var currentMonth: CalendarDay
     
     var body: some View {
-        VStack(spacing: 4) {
+        VStack(spacing: 0) {
             Text("\(day.gregorianDay)")
-                .font(.headline)
+                .font(.system(size: 20))
+                .bold()
                 .foregroundColor(
                     day.isToday || day.isSameDate($currentDate.wrappedValue) ? .white :
                         day.isHoliday ? .red :
                         day.isInMonth($currentMonth.wrappedValue) ? .primary : .gray)
             
             Text(day.lunarDay)
-                .font(.caption2)
+                .font(.system(size: 10))
                 .foregroundColor(
                     day.isToday || day.isSameDate($currentDate.wrappedValue) ? .white :
                         day.isHoliday ? .red :
                         day.isInMonth($currentMonth.wrappedValue) ? .primary : .gray)
         }
         .frame(maxWidth: .infinity, minHeight: 60)
-        .padding(6)
+        .padding(1)
         .contentShape(Rectangle()) // makes full cell tappable
         .highPriorityGesture(
                     TapGesture().onEnded {

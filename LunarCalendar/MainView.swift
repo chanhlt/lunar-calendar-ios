@@ -36,7 +36,7 @@ struct MainView: View {
             Divider()
             
             let days = Calendar.current.monthDays(for: currentMonth.date)
-            CalendarGridView(days: days, currentDate: $currentDate, currentMonth: $currentMonth)
+            MonthView(days: days, currentDate: $currentDate, currentMonth: $currentMonth)
             
             Spacer()
             

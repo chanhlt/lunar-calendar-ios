@@ -18,7 +18,7 @@ struct WeekRowView: View {
                 Text("\(weekNum)")
                     .font(.caption)
                     .foregroundColor(.secondary)
-                    .frame(width: 30, alignment: .trailing)
+                    .frame(width: 25, alignment: .trailing)
             }
             
             ForEach(week) { day in

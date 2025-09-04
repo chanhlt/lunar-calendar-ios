@@ -15,14 +15,7 @@ struct WeekView: View {
     var body: some View {
         VStack(spacing: 8) {
             // Weekday header row
-            HStack {
-                Text("Wk")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .frame(width: 30, alignment: .trailing)
-                
-                WeekdayHeaderView()
-            }
+            WeekdayHeaderView()
             
             // Week row using WeekRowView
             WeekRowView(week: days, currentDate: $currentDate, currentMonth: $currentMonth)

@@ -55,34 +55,12 @@
         }
       }
     },
-    "Today's Moon Phase" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Today's Moon Phase"
-          }
-        }
-      }
-    },
-    "Waning Gibbous" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Waning Gibbous"
-          }
-        }
-      }
-    },
     "Wk" : {
       "localizations" : {
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tuần"
+            "value" : "Tn"
           }
         }
       }
