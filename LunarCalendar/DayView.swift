@@ -76,7 +76,9 @@ struct DayView: View {
 
 
 #Preview {
-    let currentDate = Calendar.current.lunarDay()
+    let currentDate = Calendar.current.lunarDay(
+        for: Calendar.current.date(from: DateComponents(year: 2025, month: 9, day: 2))!
+    )
     DayView(
         currentDate: .constant(currentDate),
         currentMonth: .constant(currentDate),
