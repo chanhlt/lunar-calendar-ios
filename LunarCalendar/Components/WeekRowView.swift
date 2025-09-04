@@ -13,7 +13,7 @@ struct WeekRowView: View {
     var body: some View {
         HStack {
             if let firstDay = week.first {
-                let weekNum = Calendar.current.component(.weekOfYear, from: firstDay.date)
+                let weekNum = Calendar.current.component(.weekOfYear, from: firstDay.solar)
                 Text("\(weekNum)")
                     .font(.caption)
                     .foregroundColor(.secondary)

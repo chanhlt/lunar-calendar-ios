@@ -25,21 +25,19 @@ let vietnamHolidays: [Holiday] = [
     Holiday(name: "Tết Trung Thu", solarDate: nil, lunarDate: (15, 8))
 ]
 
-func holiday(for date: Date) -> Holiday? {
+func holiday(_ solar: Date, _ lunar: LunarDate) -> Holiday? {
     let calendar = Calendar.current
-    let components = calendar.dateComponents([.day, .month], from: date)
+    let components = calendar.dateComponents([.day, .month], from: solar)
     
     for holiday in vietnamHolidays {
-        if let solar = holiday.solarDate,
-           solar.day == components.day && solar.month == components.month {
+        if let solarDate = holiday.solarDate,
+           solarDate.day == components.day && solarDate.month == components.month {
             return holiday
         }
         
-        if let lunar = holiday.lunarDate {
-            if let lunarDate = date.toLunar() {
-                if lunarDate.lunarDay == lunar.day && lunarDate.lunarMonth == lunar.month {
-                    return holiday
-                }
+        if let lunarDate = holiday.lunarDate {
+            if lunarDate.day == lunar.day && lunarDate.month == lunar.month {
+                return holiday
             }
         }
     }

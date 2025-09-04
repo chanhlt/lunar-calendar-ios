@@ -51,7 +51,7 @@ struct DayCellView: View {
 #Preview {
     let calendar = Calendar.current
     let today = calendar.lunarDay()
-    let tomorrow = calendar.lunarDay(for: calendar.date(byAdding: .day, value: 1, to: today.date)!)
+    let tomorrow = calendar.lunarDay(for: calendar.date(byAdding: .day, value: 1, to: today.solar)!)
     let nationalDay = calendar.lunarDay(for: calendar.date(from: DateComponents(year: 2025, month: 9, day: 2))!)
     DayCellView(day: today, currentDate: .constant(today))
     DayCellView(day: tomorrow, currentDate: .constant(today))

@@ -18,8 +18,8 @@ let diaChi = [
 
 
 struct CalendarDay: Identifiable, Hashable {
-    var id: Date { date }   // unique per day
-    let date: Date
+    var id: Date { solar }   // unique per day
+    let solar: Date
     let lunar: LunarDate
     let gregorianDay: Int
     let lunarDay: String
@@ -39,25 +39,25 @@ extension LunarDate {
     }
     
     func lunarYearName() -> String {
-        let can = thienCan[(lunarYear + 6) % 10]   // offset so 1984 = Giáp Tý
-        let chi = diaChi[(lunarYear + 8) % 12]
+        let can = thienCan[(year + 6) % 10]   // offset so 1984 = Giáp Tý
+        let chi = diaChi[(year + 8) % 12]
         return "\(can) \(chi)"
     }
     
     func lunarDayStr() -> String {
-        if lunarDay == 15 {
+        if day == 15 {
             return "rằm"
         }
-        let dayPrefix = lunarDay <= 10 ? "mùng " : ""
-        return "\(dayPrefix)\(lunarDay)"
+        let dayPrefix = day <= 10 ? "mùng " : ""
+        return "\(dayPrefix)\(day)"
     }
     
     func lunarMonthStr() -> String {
         let monthText = isLeapMonth
-            ? "\(lunarMonth) (nhuận)"
-            : "\(lunarMonth)"
+            ? "\(month) (nhuận)"
+            : "\(month)"
         let monthStr: String
-            switch lunarMonth {
+            switch month {
             case 1:  monthStr = "tháng Giêng"
             case 12: monthStr = "tháng Chạp"
             default: monthStr = "tháng \(monthText)"
@@ -70,11 +70,11 @@ extension LunarDate {
 extension CalendarDay {
     
     func isInMonth(_ month: CalendarDay) -> Bool {
-        return Calendar.current.isDate(month.date, equalTo: date, toGranularity: .month)
+        return Calendar.current.isDate(month.solar, equalTo: solar, toGranularity: .month)
     }
     
     func isSameDate(_ other: CalendarDay) -> Bool {
-        return Calendar.current.isDate(date, inSameDayAs: other.date)
+        return Calendar.current.isDate(solar, inSameDayAs: other.solar)
     }
     
     func lunarFormatted() -> String {
@@ -82,15 +82,15 @@ extension CalendarDay {
     }
     
     func solarFormatted() -> String {
-        return date.formatted(date: .long, time: .omitted)
+        return solar.formatted(date: .long, time: .omitted)
     }
     
     func toHoliday() -> (String, String)? {
-        let _holiday = holiday(for: date)
+        let _holiday = holiday(self.solar, self.lunar)
         if _holiday == nil {
             return nil
         }
-        return (name: _holiday!.name, formatted: _holiday!.solarDate != nil ? date.formatted(date: .long, time: .omitted) : lunar.formatted())
+        return (name: _holiday!.name, formatted: _holiday!.solarDate != nil ? solar.formatted(date: .long, time: .omitted) : lunar.formatted())
     }
 }
 
@@ -107,22 +107,22 @@ extension Date {
 
 extension Calendar {
     
-    func lunarDay(for date: Date = Date()) -> CalendarDay {
-        let lunar = date.toLunar()!
-        let lunarDay = lunar.lunarDay
+    func lunarDay(for solar: Date = Date()) -> CalendarDay {
+        let lunar = solar.toLunar()!
+        let lunarDay = lunar.day
         var lunarDayStr = "\(lunarDay)"
         if lunarDay == 1 {
-            let lunarMonth = lunar.lunarMonth
+            let lunarMonth = lunar.month
             lunarDayStr = "\(lunarDay)/\(lunarMonth)"
         }
      
         return CalendarDay(
-            date: date,
+            solar: solar,
             lunar: lunar,
-            gregorianDay: component(.day, from: date),
+            gregorianDay: component(.day, from: solar),
             lunarDay: lunarDayStr,
-            isToday: isDateInToday(date),
-            isHoliday: holiday(for: date) != nil
+            isToday: isDateInToday(solar),
+            isHoliday: holiday(solar, lunar) != nil
         )
     }
     

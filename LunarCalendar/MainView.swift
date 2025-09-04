@@ -21,7 +21,7 @@ struct MainView: View {
             onSwipeLeft: { withAnimation { nextMonth() } },
             onSwipeRight: { withAnimation { prevMonth() } }
         ) {
-            let days = Calendar.current.monthDays(for: currentDate.date)
+            let days = Calendar.current.monthDays(for: currentDate.solar)
             MonthView(days: days, currentDate: $currentDate)
         }
         Spacer()
@@ -29,7 +29,7 @@ struct MainView: View {
     
     
     private func changeMonth(by value: Int) {
-        if let newMonth = Calendar.current.date(byAdding: .month, value: value, to: currentDate.date) {
+        if let newMonth = Calendar.current.date(byAdding: .month, value: value, to: currentDate.solar) {
             currentDate = Calendar.current.lunarDay(for: newMonth)
         }
     }
@@ -37,19 +37,19 @@ struct MainView: View {
     private func monthYearString(for date: CalendarDay) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM yyyy"
-        return formatter.string(from: date.date)
+        return formatter.string(from: date.solar)
     }
     
     
     private func nextMonth() {
         // swipe left → next month
-        let next = Calendar.current.date(byAdding: .month, value: 1, to: currentDate.date)!
+        let next = Calendar.current.date(byAdding: .month, value: 1, to: currentDate.solar)!
         currentDate = Calendar.current.lunarDay(for: next)
     }
     
     private func prevMonth() {
         // swipe right → previous month
-        let prev = Calendar.current.date(byAdding: .month, value: -1, to: currentDate.date)!
+        let prev = Calendar.current.date(byAdding: .month, value: -1, to: currentDate.solar)!
         currentDate = Calendar.current.lunarDay(for: prev)
     }
 }

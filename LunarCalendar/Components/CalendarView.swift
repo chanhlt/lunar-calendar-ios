@@ -80,10 +80,10 @@ struct CalenedarView<Content: View>: View {
         formatTitle: { day in
             let formatter = DateFormatter()
             formatter.dateFormat = "MMMM yyyy"
-            return formatter.string(from: day.date)
+            return formatter.string(from: day.solar)
         }
     ) {
-        let days = Calendar.current.monthDays(for: currentDate.date)
+        let days = Calendar.current.monthDays(for: currentDate.solar)
         MonthView(days: days, currentDate: .constant(currentDate))
     }
     
@@ -93,12 +93,12 @@ struct CalenedarView<Content: View>: View {
             print("\(offset)")
         },
         formatTitle: { day in
-            let week = Calendar.current.dateComponents([.weekOfYear, .year], from: currentDate.date)
+            let week = Calendar.current.dateComponents([.weekOfYear, .year], from: currentDate.solar)
             let prefix = String("Week")
             return "\(prefix) \(week.weekOfYear!), \(week.year!)"
         }
     ) {
-        let days = Calendar.current.weekDays(for: currentDate.date)
+        let days = Calendar.current.weekDays(for: currentDate.solar)
         WeekView(days: days, currentDate: .constant(currentDate))
     }
 }

@@ -31,7 +31,7 @@ struct DetailView: View {
                 onSwipeRight: prevWeek,
                 onSwipeDown: { dismiss() }
             ) {
-                let days = Calendar.current.weekDays(for: currentDate.date)
+                let days = Calendar.current.weekDays(for: currentDate.solar)
                 WeekView(days: days, currentDate: $currentDate)
                 
                 if currentDate.isHoliday {
@@ -56,13 +56,13 @@ struct DetailView: View {
     }
     
     private func changeWeek(_ by: Int) {
-        if let newDate = Calendar.current.date(byAdding: .weekOfYear, value: by, to: currentDate.date) {
+        if let newDate = Calendar.current.date(byAdding: .weekOfYear, value: by, to: currentDate.solar) {
             currentDate = Calendar.current.lunarDay(for: newDate)
         }
     }
     
     private func formatWeek(_ date: CalendarDay) -> String {
-        let week = Calendar.current.dateComponents([.weekOfYear, .year], from: date.date)
+        let week = Calendar.current.dateComponents([.weekOfYear, .year], from: date.solar)
         let prefix = String(localized: "Week")
         return "\(prefix) \(week.weekOfYear!), \(week.year!)"
     }
@@ -70,13 +70,13 @@ struct DetailView: View {
     
     private func nextWeek() {
         // swipe left → next week
-        let next = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: currentDate.date)!
+        let next = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: currentDate.solar)!
         currentDate = Calendar.current.lunarDay(for: next)
     }
     
     private func prevWeek() {
         // swipe right → previous week
-        let prev = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: currentDate.date)!
+        let prev = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: currentDate.solar)!
         currentDate = Calendar.current.lunarDay(for: prev)
     }
 }

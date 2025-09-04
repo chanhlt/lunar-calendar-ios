@@ -10,9 +10,9 @@ import SQLite
 
 struct LunarDate: Hashable {
     let solarDate: String
-    let lunarYear: Int
-    let lunarMonth: Int
-    let lunarDay: Int
+    let year: Int
+    let month: Int
+    let day: Int
     let isLeapMonth: Bool
 }
 
@@ -55,9 +55,9 @@ class LunarDatabase {
             for row in try stmt.run(dateStr) {
                 return LunarDate(
                     solarDate: row[0] as! String,
-                    lunarYear: Int(row[1] as! Int64),   // SQLite returns Int64
-                    lunarMonth: Int(row[2] as! Int64),
-                    lunarDay: Int(row[3] as! Int64),
+                    year: Int(row[1] as! Int64),   // SQLite returns Int64
+                    month: Int(row[2] as! Int64),
+                    day: Int(row[3] as! Int64),
                     isLeapMonth: (row[4] as! Int64) == 1
                 )
             }
