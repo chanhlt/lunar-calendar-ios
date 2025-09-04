@@ -63,8 +63,8 @@ struct DetailView: View {
     
     private func formatWeek(_ date: CalendarDay) -> String {
         let week = Calendar.current.dateComponents([.weekOfYear, .year], from: date.solar)
-        let prefix = String(localized: "Week")
-        return "\(prefix) \(week.weekOfYear!), \(week.year!)"
+        let prefix = String(localized: "week")
+        return "\(prefix) \(week.weekOfYear!) \(week.year!)"
     }
     
     

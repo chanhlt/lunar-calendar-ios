@@ -58,13 +58,13 @@
         }
       }
     },
-    "Week" : {
+    "week" : {
       "extractionState" : "manual",
       "localizations" : {
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tuần"
+            "value" : "tuần"
           }
         }
       }
