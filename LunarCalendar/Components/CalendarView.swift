@@ -86,4 +86,19 @@ struct CalenedarView<Content: View>: View {
         let days = Calendar.current.monthDays(for: currentDate.date)
         MonthView(days: days, currentDate: .constant(currentDate))
     }
+    
+    CalenedarView(
+        currentDate: .constant(currentDate),
+        onNavigate: { offset in
+            print("\(offset)")
+        },
+        formatTitle: { day in
+            let week = Calendar.current.dateComponents([.weekOfYear, .year], from: currentDate.date)
+            let prefix = String("Week")
+            return "\(prefix) \(week.weekOfYear!), \(week.year!)"
+        }
+    ) {
+        let days = Calendar.current.weekDays(for: currentDate.date)
+        WeekView(days: days, currentDate: .constant(currentDate))
+    }
 }

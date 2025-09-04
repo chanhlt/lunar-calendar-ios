@@ -55,6 +55,17 @@
         }
       }
     },
+    "Week" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tuần"
+          }
+        }
+      }
+    },
     "Wk" : {
       "localizations" : {
         "vi" : {

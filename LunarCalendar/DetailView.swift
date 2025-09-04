@@ -64,11 +64,9 @@ struct DetailView: View {
     }
     
     private func formatWeek(_ date: CalendarDay) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "d MMM"
-        let start = Calendar.current.startOfWeek(for: date.date)
-        let end = Calendar.current.date(byAdding: .day, value: 6, to: start)!
-        return "\(formatter.string(from: start)) – \(formatter.string(from: end))"
+        let week = Calendar.current.dateComponents([.weekOfYear, .year], from: date.date)
+        let prefix = String(localized: "Week")
+        return "\(prefix) \(week.weekOfYear!), \(week.year!)"
     }
 }
 
