@@ -56,9 +56,9 @@ struct CalenedarView<Content: View>: View {
                     if value.translation.height < -50 { // swipe up
                         onSwipeUp?()
                     } else if value.translation.width < -50 { // swipe left
-                        withAnimation { onSwipeLeft?() }
+                        onSwipeLeft?()
                     } else if value.translation.width > 50 { // swipe right
-                        withAnimation { onSwipeRight?() }
+                        onSwipeRight?()
                     } else if value.translation.height > 50 { // swipe down
                         onSwipeDown?()
                     }

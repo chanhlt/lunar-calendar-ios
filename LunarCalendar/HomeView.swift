@@ -18,15 +18,13 @@ struct HomeView: View {
 
                 MainView(
                     currentDate: $currentDate,
-                    onSwipeUp: showDayView,
-                    onSwipeLeft: nextMonth,
-                    onSwipeRight: prevMonth
+                    onSwipeUp: showDayView
                 )
                 
                 MenuView(
                     mode: .month,
                     onMonth: { },
-                    onToday: { withAnimation { onToday() } },
+                    onToday: onToday,
                     onSettings: { }
                 )
                 
@@ -38,9 +36,7 @@ struct HomeView: View {
         .sheet(isPresented: $showDetailView) {
             DetailView(
                 currentDate: $currentDate,
-                onToday: { withAnimation { onToday() } },
-                nextWeek: nextWeek,
-                prevWeek: prevWeek
+                onToday: onToday
             )
         }
     }
@@ -49,29 +45,6 @@ struct HomeView: View {
         showDetailView = true
     }
     
-    private func nextMonth() {
-        // swipe left → next month
-        let next = Calendar.current.date(byAdding: .month, value: 1, to: currentDate.date)!
-        currentDate = Calendar.current.lunarDay(for: next)
-    }
-    
-    private func prevMonth() {
-        // swipe right → previous month
-        let prev = Calendar.current.date(byAdding: .month, value: -1, to: currentDate.date)!
-        currentDate = Calendar.current.lunarDay(for: prev)
-    }
-    
-    private func nextWeek() {
-        // swipe left → next week
-        let next = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: currentDate.date)!
-        currentDate = Calendar.current.lunarDay(for: next)
-    }
-    
-    private func prevWeek() {
-        // swipe right → previous week
-        let prev = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: currentDate.date)!
-        currentDate = Calendar.current.lunarDay(for: prev)
-    }
     
     private func onToday() {
         currentDate = Calendar.current.lunarDay()

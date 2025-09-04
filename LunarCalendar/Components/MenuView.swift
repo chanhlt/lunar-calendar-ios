@@ -17,27 +17,27 @@ struct MenuView: View {
     var onHome: (() -> Void)? = nil
     var onMonth: (() -> Void)? = nil
     var onToday: () -> Void
-    var onSettings: () -> Void
+    var onSettings: (() -> Void)? = nil
     
     var body: some View {
         HStack {
-            Spacer()
+//            Spacer()
             
-            if mode == .month {
-                Button(action: { onMonth?() }) {
-                    VStack {
-                        Image(systemName: "calendar")
-                        Text("month")
-                    }
-                }
-            } else {
-                Button(action: { onHome?() }) {
-                    VStack {
-                        Image(systemName: "house")
-                        Text("home")
-                    }
-                }
-            }
+//            if mode == .month {
+//                Button(action: { onMonth?() }) {
+//                    VStack {
+//                        Image(systemName: "calendar")
+//                        Text("month")
+//                    }
+//                }
+//            } else {
+//                Button(action: { onHome?() }) {
+//                    VStack {
+//                        Image(systemName: "house")
+//                        Text("home")
+//                    }
+//                }
+//            }
             
             Spacer()
             
@@ -50,14 +50,14 @@ struct MenuView: View {
             
             Spacer()
             
-            Button(action: onSettings) {
-                VStack {
-                    Image(systemName: "gearshape")
-                    Text("settings")
-                }
-            }
+//            Button(action: { onSettings?() }) {
+//                VStack {
+//                    Image(systemName: "gearshape")
+//                    Text("settings")
+//                }
+//            }
             
-            Spacer()
+//            Spacer()
         }
         .padding()
     }
@@ -66,9 +66,6 @@ struct MenuView: View {
 #Preview {
     MenuView(
         mode: .home,
-        onHome: { print("Home tapped") },
-        onMonth: { print("Month tapped") },
-        onToday: { print("Today tapped") },
-        onSettings: { print("Settings tapped") }
+        onToday: { print("Today tapped") }
     )
 }

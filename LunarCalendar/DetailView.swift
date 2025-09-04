@@ -9,8 +9,6 @@ import SwiftUI
 struct DetailView: View {
     @Binding var currentDate: CalendarDay
     var onToday: () -> Void
-    var nextWeek: () -> Void
-    var prevWeek: () -> Void
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -68,6 +66,19 @@ struct DetailView: View {
         let prefix = String(localized: "Week")
         return "\(prefix) \(week.weekOfYear!), \(week.year!)"
     }
+    
+    
+    private func nextWeek() {
+        // swipe left → next week
+        let next = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: currentDate.date)!
+        currentDate = Calendar.current.lunarDay(for: next)
+    }
+    
+    private func prevWeek() {
+        // swipe right → previous week
+        let prev = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: currentDate.date)!
+        currentDate = Calendar.current.lunarDay(for: prev)
+    }
 }
 
 
@@ -77,8 +88,6 @@ struct DetailView: View {
     )
     DetailView(
         currentDate: .constant(currentDate),
-        onToday: { },
-        nextWeek: { },
-        prevWeek: { }
+        onToday: { }
     )
 }

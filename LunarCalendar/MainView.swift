@@ -11,8 +11,6 @@ struct MainView: View {
     
     @Binding var currentDate: CalendarDay
     var onSwipeUp: (() -> Void)?
-    var onSwipeLeft: (() -> Void)?
-    var onSwipeRight: (() -> Void)?
     
     var body: some View {
         CalenedarView(
@@ -20,8 +18,8 @@ struct MainView: View {
             onNavigate: changeMonth,
             formatTitle: monthYearString,
             onSwipeUp: onSwipeUp,
-            onSwipeLeft: onSwipeLeft,
-            onSwipeRight: onSwipeRight
+            onSwipeLeft: { withAnimation { nextMonth() } },
+            onSwipeRight: { withAnimation { prevMonth() } }
         ) {
             let days = Calendar.current.monthDays(for: currentDate.date)
             MonthView(days: days, currentDate: $currentDate)
@@ -40,6 +38,19 @@ struct MainView: View {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM yyyy"
         return formatter.string(from: date.date)
+    }
+    
+    
+    private func nextMonth() {
+        // swipe left → next month
+        let next = Calendar.current.date(byAdding: .month, value: 1, to: currentDate.date)!
+        currentDate = Calendar.current.lunarDay(for: next)
+    }
+    
+    private func prevMonth() {
+        // swipe right → previous month
+        let prev = Calendar.current.date(byAdding: .month, value: -1, to: currentDate.date)!
+        currentDate = Calendar.current.lunarDay(for: prev)
     }
 }
 
