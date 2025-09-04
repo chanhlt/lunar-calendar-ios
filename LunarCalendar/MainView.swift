@@ -11,9 +11,20 @@ struct MainView: View {
     
     @Binding var currentDate: CalendarDay
     @Binding var currentMonth: CalendarDay
+    var onSwipeUp: (() -> Void)?
+    var onSwipeLeft: (() -> Void)?
+    var onSwipeRight: (() -> Void)?
     
     var body: some View {
-        CalenedarView(currentDate: $currentDate, currentMonth: $currentMonth, onNavigate: changeMonth, formatTitle: monthYearString) {
+        CalenedarView(
+            currentDate: $currentDate,
+            currentMonth: $currentMonth,
+            onNavigate: changeMonth,
+            formatTitle: monthYearString,
+            onSwipeUp: onSwipeUp,
+            onSwipeLeft: onSwipeLeft,
+            onSwipeRight: onSwipeRight
+        ) {
             let days = Calendar.current.monthDays(for: currentMonth.date)
             MonthView(days: days, currentDate: $currentDate, currentMonth: $currentMonth)
         }

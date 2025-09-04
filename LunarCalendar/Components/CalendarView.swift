@@ -14,6 +14,10 @@ struct CalenedarView<Content: View>: View {
     @Binding var currentMonth: CalendarDay
     var onNavigate: (_ by: Int) -> Void
     var formatTitle: (_ date: CalendarDay) -> String
+    var onSwipeUp: (() -> Void)?
+    var onSwipeLeft: (() -> Void)?
+    var onSwipeRight: (() -> Void)?
+    var onSwipeDown: (() -> Void)?
     
     @ViewBuilder var content: () -> Content
     
@@ -43,7 +47,24 @@ struct CalenedarView<Content: View>: View {
             
             content()
             
+            Spacer()
+            
         }
+        .contentShape(Rectangle()) // make whole area hittable
+        .gesture(
+            DragGesture()
+                .onEnded { value in
+                    if value.translation.height < -50 { // swipe up
+                        onSwipeUp?()
+                    } else if value.translation.width < -50 { // swipe left
+                        withAnimation { onSwipeLeft?() }
+                    } else if value.translation.width > 50 { // swipe right
+                        withAnimation { onSwipeRight?() }
+                    } else if value.translation.height > 50 { // swipe down
+                        onSwipeDown?()
+                    }
+                }
+        )
     }
     
 }
@@ -53,13 +74,18 @@ struct CalenedarView<Content: View>: View {
     let currentDate = Calendar.current.lunarDay()
     let currentMonth = Calendar.current.lunarDay()
     
-    CalenedarView(currentDate: .constant(currentDate), currentMonth: .constant(currentMonth), onNavigate: {by in
-        print("\(by)")
-    }, formatTitle: {value in
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM yyyy"
-        return formatter.string(from: value.date)
-    }) {
+    CalenedarView(
+        currentDate: .constant(currentDate),
+        currentMonth: .constant(currentMonth),
+        onNavigate: { offset in
+            print("\(offset)")
+        },
+        formatTitle: { day in
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MMMM yyyy"
+            return formatter.string(from: day.date)
+        }
+    ) {
         let days = Calendar.current.monthDays(for: currentMonth.date)
         MonthView(days: days, currentDate: .constant(currentDate), currentMonth: .constant(currentMonth))
     }

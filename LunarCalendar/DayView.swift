@@ -9,6 +9,9 @@ import SwiftUI
 struct DayView: View {
     @Binding var currentDate: CalendarDay
     @Binding var currentMonth: CalendarDay
+    var onToday: () -> Void
+    var nextWeek: () -> Void
+    var prevWeek: () -> Void
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -23,31 +26,36 @@ struct DayView: View {
                 .fontWeight(.semibold)
                 .padding(.vertical, 5)
             
-            CalenedarView(currentDate: $currentDate, currentMonth: $currentMonth, onNavigate: changeWeek, formatTitle: formatWeek) {
-                let days = Calendar.current.weekDays(for: currentDate.date)
+            CalenedarView(
+                currentDate: $currentDate,
+                currentMonth: $currentMonth,
+                onNavigate: changeWeek,
+                formatTitle: formatWeek,
+                onSwipeLeft: nextWeek,
+                onSwipeRight: prevWeek,
+                onSwipeDown: { dismiss() }
+            ) {
+                let days = Calendar.current.weekDays(for: currentMonth.date)
                 WeekView(days: days, currentDate: $currentDate, currentMonth: $currentMonth)
+                
+                if currentDate.isHoliday {
+                    HolidayView(currentDate: $currentDate)
+                }
+                
+                Spacer()
             }
             
-            if currentDate.isHoliday {
-                HolidayView(currentDate: $currentDate)
-            }
-            
-            Spacer()
             
             // Bottom Navigation
             BottomTabBar(
-                mode: .month,
+                mode: .home,
                 onHome: { dismiss() },
-                onToday: {
-                    withAnimation {
-                        currentDate = Calendar.current.lunarDay()
-                        currentMonth = currentDate
-                    }
-                },
+                onToday: onToday,
                 onSettings: { }
             )
         }
         .padding()
+        .contentShape(Rectangle())
         
     }
     
@@ -60,7 +68,7 @@ struct DayView: View {
     private func formatWeek(_ date: CalendarDay) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "d MMM"
-        let start = Calendar.current.startOfWeek(for: currentDate.date)
+        let start = Calendar.current.startOfWeek(for: date.date)
         let end = Calendar.current.date(byAdding: .day, value: 6, to: start)!
         return "\(formatter.string(from: start)) – \(formatter.string(from: end))"
     }
@@ -69,5 +77,11 @@ struct DayView: View {
 
 #Preview {
     let currentDate = Calendar.current.lunarDay()
-    DayView(currentDate: .constant(currentDate), currentMonth: .constant(currentDate))
+    DayView(
+        currentDate: .constant(currentDate),
+        currentMonth: .constant(currentDate),
+        onToday: { },
+        nextWeek: { },
+        prevWeek: { }
+    )
 }
