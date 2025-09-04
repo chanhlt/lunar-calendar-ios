@@ -8,7 +8,6 @@ import SwiftUI
 
 struct DetailView: View {
     @Binding var currentDate: CalendarDay
-    @Binding var currentMonth: CalendarDay
     var onToday: () -> Void
     var nextWeek: () -> Void
     var prevWeek: () -> Void
@@ -28,15 +27,14 @@ struct DetailView: View {
             
             CalenedarView(
                 currentDate: $currentDate,
-                currentMonth: $currentMonth,
                 onNavigate: changeWeek,
                 formatTitle: formatWeek,
                 onSwipeLeft: nextWeek,
                 onSwipeRight: prevWeek,
                 onSwipeDown: { dismiss() }
             ) {
-                let days = Calendar.current.weekDays(for: currentMonth.date)
-                WeekView(days: days, currentDate: $currentDate, currentMonth: $currentMonth)
+                let days = Calendar.current.weekDays(for: currentDate.date)
+                WeekView(days: days, currentDate: $currentDate)
                 
                 if currentDate.isHoliday {
                     HolidayView(currentDate: $currentDate)
@@ -60,8 +58,8 @@ struct DetailView: View {
     }
     
     private func changeWeek(_ by: Int) {
-        if let newDate = Calendar.current.date(byAdding: .weekOfYear, value: by, to: currentMonth.date) {
-            currentMonth = Calendar.current.lunarDay(for: newDate)
+        if let newDate = Calendar.current.date(byAdding: .weekOfYear, value: by, to: currentDate.date) {
+            currentDate = Calendar.current.lunarDay(for: newDate)
         }
     }
     
@@ -81,7 +79,6 @@ struct DetailView: View {
     )
     DetailView(
         currentDate: .constant(currentDate),
-        currentMonth: .constant(currentDate),
         onToday: { },
         nextWeek: { },
         prevWeek: { }

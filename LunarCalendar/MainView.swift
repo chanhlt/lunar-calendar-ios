@@ -10,7 +10,6 @@ import SwiftUI
 struct MainView: View {
     
     @Binding var currentDate: CalendarDay
-    @Binding var currentMonth: CalendarDay
     var onSwipeUp: (() -> Void)?
     var onSwipeLeft: (() -> Void)?
     var onSwipeRight: (() -> Void)?
@@ -18,23 +17,22 @@ struct MainView: View {
     var body: some View {
         CalenedarView(
             currentDate: $currentDate,
-            currentMonth: $currentMonth,
             onNavigate: changeMonth,
             formatTitle: monthYearString,
             onSwipeUp: onSwipeUp,
             onSwipeLeft: onSwipeLeft,
             onSwipeRight: onSwipeRight
         ) {
-            let days = Calendar.current.monthDays(for: currentMonth.date)
-            MonthView(days: days, currentDate: $currentDate, currentMonth: $currentMonth)
+            let days = Calendar.current.monthDays(for: currentDate.date)
+            MonthView(days: days, currentDate: $currentDate)
         }
         Spacer()
     }
     
     
     private func changeMonth(by value: Int) {
-        if let newMonth = Calendar.current.date(byAdding: .month, value: value, to: currentMonth.date) {
-            currentMonth = Calendar.current.lunarDay(for: newMonth)
+        if let newMonth = Calendar.current.date(byAdding: .month, value: value, to: currentDate.date) {
+            currentDate = Calendar.current.lunarDay(for: newMonth)
         }
     }
     
@@ -48,6 +46,5 @@ struct MainView: View {
 
 #Preview {
     let currentDate = Calendar.current.lunarDay()
-    let currentMonth = Calendar.current.lunarDay()
-    MainView(currentDate: .constant(currentDate), currentMonth: .constant(currentMonth))
+    MainView(currentDate: .constant(currentDate))
 }

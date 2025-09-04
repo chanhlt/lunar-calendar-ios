@@ -11,7 +11,6 @@ struct CalenedarView<Content: View>: View {
     
     
     @Binding var currentDate: CalendarDay
-    @Binding var currentMonth: CalendarDay
     var onNavigate: (_ by: Int) -> Void
     var formatTitle: (_ date: CalendarDay) -> String
     var onSwipeUp: (() -> Void)?
@@ -31,7 +30,7 @@ struct CalenedarView<Content: View>: View {
                         .contentShape(Rectangle())
                 }
                 Spacer()
-                Text(formatTitle(currentMonth))
+                Text(formatTitle(currentDate))
                     .font(.title2)
                     .fontWeight(.bold)
                 Spacer()
@@ -72,11 +71,9 @@ struct CalenedarView<Content: View>: View {
 
 #Preview {
     let currentDate = Calendar.current.lunarDay()
-    let currentMonth = Calendar.current.lunarDay()
     
     CalenedarView(
         currentDate: .constant(currentDate),
-        currentMonth: .constant(currentMonth),
         onNavigate: { offset in
             print("\(offset)")
         },
@@ -86,7 +83,7 @@ struct CalenedarView<Content: View>: View {
             return formatter.string(from: day.date)
         }
     ) {
-        let days = Calendar.current.monthDays(for: currentMonth.date)
-        MonthView(days: days, currentDate: .constant(currentDate), currentMonth: .constant(currentMonth))
+        let days = Calendar.current.monthDays(for: currentDate.date)
+        MonthView(days: days, currentDate: .constant(currentDate))
     }
 }

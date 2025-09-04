@@ -10,7 +10,6 @@ import SwiftUI
 struct MonthView: View {
     let days: [CalendarDay]
     @Binding var currentDate: CalendarDay
-    @Binding var currentMonth: CalendarDay
     
     var body: some View {
         VStack(spacing: 8) {
@@ -19,7 +18,7 @@ struct MonthView: View {
             
             // Weeks
             ForEach(weeks(from: days), id: \.self) { week in
-                WeekRowView(week: week, currentDate: $currentDate, currentMonth: $currentMonth)
+                WeekRowView(week: week, currentDate: $currentDate)
             }
         }
     }
@@ -35,5 +34,5 @@ struct MonthView: View {
 #Preview {
     let monthDays = Calendar.current.monthDays(for: Date())
     let currentDate = Calendar.current.lunarDay()
-    MonthView(days: monthDays, currentDate: .constant(currentDate), currentMonth: .constant(currentDate))
+    MonthView(days: monthDays, currentDate: .constant(currentDate))
 }

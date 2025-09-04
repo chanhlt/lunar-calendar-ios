@@ -9,7 +9,6 @@ import SwiftUI
 struct DayCellView: View {
     let day: CalendarDay
     @Binding var currentDate: CalendarDay
-    @Binding var currentMonth: CalendarDay
     
     var body: some View {
         VStack(spacing: 0) {
@@ -19,14 +18,14 @@ struct DayCellView: View {
                 .foregroundColor(
                     day.isToday || day.isSameDate($currentDate.wrappedValue) ? .white :
                         day.isHoliday ? .red :
-                        day.isInMonth($currentMonth.wrappedValue) ? .primary : .gray)
+                        day.isInMonth($currentDate.wrappedValue) ? .primary : .gray)
             
             Text(day.lunarDay)
                 .font(.system(size: 10))
                 .foregroundColor(
                     day.isToday || day.isSameDate($currentDate.wrappedValue) ? .white :
                         day.isHoliday ? .red :
-                        day.isInMonth($currentMonth.wrappedValue) ? .primary : .gray)
+                        day.isInMonth($currentDate.wrappedValue) ? .primary : .gray)
         }
         .frame(maxWidth: .infinity, minHeight: 60)
         .padding(1)
@@ -52,6 +51,6 @@ struct DayCellView: View {
     let nextDay = calendar.date(byAdding: .day, value: 1, to: Date())
     let tomorrow = calendar.lunarDay(for: nextDay ?? Date(), current: nextDay ?? Date())
     let currentDate = Calendar.current.lunarDay(for: nextDay ?? Date())
-    DayCellView(day: tomorrow, currentDate: .constant(currentDate), currentMonth: .constant(currentDate))
+    DayCellView(day: tomorrow, currentDate: .constant(currentDate))
     
 }
