@@ -24,7 +24,7 @@ struct WeekView: View {
 
 
 #Preview {
-    let weekDays = Calendar.current.weekDays(for: Date())
-    let currentDate = Calendar.current.lunarDay(for: Date())
+    let currentDate = Calendar.current.lunarDay()
+    let weekDays = Calendar.current.weekDays(for: currentDate.date)
     WeekView(days: weekDays, currentDate: .constant(currentDate))
 }

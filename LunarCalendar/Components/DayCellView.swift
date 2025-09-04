@@ -47,10 +47,11 @@ struct DayCellView: View {
 
 #Preview {
     let calendar = Calendar.current
-    let today = calendar.lunarDay(for: Date(), current: Date())
-    let nextDay = calendar.date(byAdding: .day, value: 1, to: Date())
-    let tomorrow = calendar.lunarDay(for: nextDay ?? Date(), current: nextDay ?? Date())
-    let currentDate = Calendar.current.lunarDay(for: nextDay ?? Date())
-    DayCellView(day: tomorrow, currentDate: .constant(currentDate))
-    
+    let today = calendar.lunarDay()
+    let tomorrow = calendar.lunarDay(for: calendar.date(byAdding: .day, value: 1, to: today.date)!)
+    let nationalDay = calendar.lunarDay(for: calendar.date(from: DateComponents(year: 2025, month: 9, day: 2))!)
+    DayCellView(day: today, currentDate: .constant(today))
+    DayCellView(day: tomorrow, currentDate: .constant(today))
+    DayCellView(day: nationalDay, currentDate: .constant(today))
+    DayCellView(day: nationalDay, currentDate: .constant(nationalDay))
 }

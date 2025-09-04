@@ -107,7 +107,7 @@ extension Date {
 
 extension Calendar {
     
-    func lunarDay(for date: Date = Date(), current currentDate: Date = Date()) -> CalendarDay {
+    func lunarDay(for date: Date = Date()) -> CalendarDay {
         let lunar = date.toLunar()!
         let lunarDay = lunar.lunarDay
         var lunarDayStr = "\(lunarDay)"
@@ -130,7 +130,7 @@ extension Calendar {
         let startOfWeek = self.startOfWeek(for: date)
         return (0..<7).map { offset in
             let d = self.date(byAdding: .day, value: offset, to: startOfWeek)!
-            return self.lunarDay(for: d, current: date)
+            return self.lunarDay(for: d)
         }
     }
     
@@ -148,7 +148,7 @@ extension Calendar {
         var current = fullRange.lowerBound
         
         while current <= fullRange.upperBound {
-            days.append(self.lunarDay(for: current, current: date))
+            days.append(self.lunarDay(for: current))
             current = self.date(byAdding: .day, value: 1, to: current)!
         }
         
