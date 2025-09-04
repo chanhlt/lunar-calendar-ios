@@ -33,6 +33,8 @@ struct WeekContainer: View {
             WeekView(days: days, currentDate: $currentDate, currentMonth: $currentMonth)
                 
         }
+        
+        
     }
     
     private var weekTitle: String {
@@ -44,8 +46,8 @@ struct WeekContainer: View {
     }
     
     private func changeWeek(by offset: Int) {
-        if let newDate = Calendar.current.date(byAdding: .weekOfYear, value: offset, to: currentDate.date) {
-            currentDate = Calendar.current.lunarDay(for: newDate)
+        if let newDate = Calendar.current.date(byAdding: .weekOfYear, value: offset, to: currentMonth.date) {
+            currentMonth = Calendar.current.lunarDay(for: newDate)
         }
     }
 }

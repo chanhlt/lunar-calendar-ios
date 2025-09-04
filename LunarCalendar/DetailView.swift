@@ -15,10 +15,10 @@ struct DetailView: View {
         
         // Header with today’s date
         VStack {
-            Text(currentDate.date.formatted(date: .long, time: .omitted))
+            Text(currentDate.solarFormatted())
                 .font(.headline)
                 .foregroundColor(.gray)
-            Text("Âm lịch: \(currentDate.date.lunarFormatted())")
+            Text("Âm lịch: \(currentDate.lunarFormatted())")
                 .font(.headline)
                 .fontWeight(.semibold)
                 .padding(.vertical, 5)
@@ -46,6 +46,26 @@ struct DetailView: View {
             )
         }
         .padding()
+//        .contentShape(Rectangle())
+//        .simultaneousGesture(
+//            DragGesture()
+//                .onEnded { value in
+//                    if value.translation.width < -50 {
+//                        withAnimation {
+//                            let next = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: currentMonth.date)!
+//                            currentMonth = Calendar.current.lunarDay(for: next)
+//                        }
+//                        
+//                    } else if value.translation.width > 50 {
+//                        withAnimation {
+//                            let prev = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: currentMonth.date)!
+//                            currentMonth = Calendar.current.lunarDay(for: prev)
+//                        }
+//                        
+//                    }
+//                }
+//        )
+//        
         
     }
 }

@@ -39,6 +39,7 @@ struct HomeView: View {
             DragGesture()
                 .onEnded { value in
                     if value.translation.height < -50 { // swipe up
+                        currentMonth = currentDate
                         showDetailView = true
                     } else if value.translation.width < -50 {
                         withAnimation {
