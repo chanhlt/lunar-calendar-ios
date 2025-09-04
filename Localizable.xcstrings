@@ -11,9 +11,6 @@
         }
       }
     },
-    "Âm lịch: %@" : {
-
-    },
     "home" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -21,6 +18,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Trở lại"
+          }
+        }
+      }
+    },
+    "Lunar: %@" : {
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Âm lịch: %@"
           }
         }
       }
