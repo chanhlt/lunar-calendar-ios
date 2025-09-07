@@ -34,7 +34,6 @@ class LunarDatabase {
 
         do {
             db = try Connection(dbPath, readonly: true)
-            print("✅ Database opened at: \(dbPath)")
         } catch {
             print("❌ Failed to open DB: \(error)")
             return nil

@@ -14,23 +14,11 @@ struct HomeView: View {
     
     var body: some View {
         NavigationStack {
-            VStack(spacing: 20) {
-
-                MainView(
-                    currentDate: $currentDate,
-                    onSwipeUp: showDayView
-                )
-                
-                MenuView(
-                    mode: .month,
-                    onMonth: { },
-                    onToday: onToday,
-                    onSettings: { }
-                )
-                
-            }
-            .padding()
-            
+            MainView(
+                currentDate: $currentDate,
+                onSwipeUp: showDayView,
+                onToday: onToday
+            )
         }
         .contentShape(Rectangle())
         .sheet(isPresented: $showDetailView) {

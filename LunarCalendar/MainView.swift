@@ -11,20 +11,31 @@ struct MainView: View {
     
     @Binding var currentDate: CalendarDay
     var onSwipeUp: (() -> Void)?
+    var onToday: () -> Void
     
     var body: some View {
-        CalendarView(
-            currentDate: $currentDate,
-            onNavigate: changeMonth,
-            formatTitle: monthYearString,
-            onSwipeUp: onSwipeUp,
-            onSwipeLeft: { withAnimation { nextMonth() } },
-            onSwipeRight: { withAnimation { prevMonth() } }
-        ) {
-            let days = Calendar.current.monthDays(for: currentDate.solar)
-            MonthView(days: days, currentDate: $currentDate)
+        VStack(spacing: 20) {
+            CalendarView(
+                currentDate: $currentDate,
+                onNavigate: changeMonth,
+                formatTitle: monthYearString,
+                onSwipeUp: onSwipeUp,
+                onSwipeLeft: { withAnimation { nextMonth() } },
+                onSwipeRight: { withAnimation { prevMonth() } }
+            ) {
+                let days = Calendar.current.monthDays(for: currentDate.solar)
+                MonthView(days: days, currentDate: $currentDate)
+            }
+            
+            Spacer()
+            
+            MenuView(
+                mode: .month,
+                onMonth: { },
+                onToday: onToday,
+                onSettings: { }
+            )
         }
-        Spacer()
     }
     
     
@@ -57,5 +68,5 @@ struct MainView: View {
 
 #Preview {
     let currentDate = Calendar.current.lunarDay()
-    MainView(currentDate: .constant(currentDate))
+    MainView(currentDate: .constant(currentDate), onToday: { })
 }
