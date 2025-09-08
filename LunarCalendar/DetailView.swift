@@ -34,7 +34,7 @@ struct DetailView: View {
                 let days = Calendar.current.weekDays(for: currentDate.solar)
                 WeekView(days: days, currentDate: $currentDate)
                 
-                if currentDate.isHoliday {
+                if currentDate.isHoliday || currentDate.isSpecialDay {
                     HolidayView(currentDate: $currentDate)
                 }
                 

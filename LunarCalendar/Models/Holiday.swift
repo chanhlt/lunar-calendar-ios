@@ -14,17 +14,26 @@ struct Holiday {
 
 let vietnamHolidays: [Holiday] = [
     Holiday(name: "Tết Dương lịch", solarDate: DateComponents(month: 1, day: 1), lunarDate: nil),
-    Holiday(name: "Quốc tế Phụ nữ", solarDate: DateComponents(month: 3, day: 8), lunarDate: nil),
     Holiday(name: "Giải phóng miền Nam", solarDate: DateComponents(month: 4, day: 30), lunarDate: nil),
     Holiday(name: "Quốc tế Lao động", solarDate: DateComponents(month: 5, day: 1), lunarDate: nil),
     Holiday(name: "Quốc khánh", solarDate: DateComponents(month: 9, day: 2), lunarDate: nil),
-    Holiday(name: "Phụ nữ Việt Nam", solarDate: DateComponents(month: 10, day: 20), lunarDate: nil),
-    Holiday(name: "Nhà giáo Việt Nam", solarDate: DateComponents(month: 11, day: 20), lunarDate: nil),
 
     Holiday(name: "Mùng 1 Tết", solarDate: nil, lunarDate: (1, 1)),
     Holiday(name: "Mùng 2 Tết", solarDate: nil, lunarDate: (2, 1)),
     Holiday(name: "Mùng 3 Tết", solarDate: nil, lunarDate: (3, 1)),
-    Holiday(name: "Giỗ Tổ Hùng Vương", solarDate: nil, lunarDate: (10, 3)),
+    Holiday(name: "Giỗ Tổ Hùng Vương", solarDate: nil, lunarDate: (10, 3))
+]
+
+
+let specialDays: [Holiday] = [
+    Holiday(name: "Quốc tế Phụ nữ", solarDate: DateComponents(month: 3, day: 8), lunarDate: nil),
+    Holiday(name: "Phụ nữ Việt Nam", solarDate: DateComponents(month: 10, day: 20), lunarDate: nil),
+    Holiday(name: "Nhà giáo Việt Nam", solarDate: DateComponents(month: 11, day: 20), lunarDate: nil),
+
+    Holiday(name: "Tết Nguyên Tiêu", solarDate: nil, lunarDate: (15, 1)),
+    Holiday(name: "Tết Hàn Thực", solarDate: nil, lunarDate: (3, 3)),
+    Holiday(name: "Tết Đoan Ngọ", solarDate: nil, lunarDate: (5, 5)),
+    Holiday(name: "Vu Lan", solarDate: nil, lunarDate: (15, 7)),
     Holiday(name: "Tết Trung Thu", solarDate: nil, lunarDate: (15, 8))
 ]
 
@@ -41,6 +50,26 @@ func holiday(_ solar: Date, _ lunar: LunarDate) -> Holiday? {
         if let lunarDate = holiday.lunarDate {
             if lunarDate.day == lunar.day && lunarDate.month == lunar.month {
                 return holiday
+            }
+        }
+    }
+    return nil
+}
+
+
+func specialDay(_ solar: Date, _ lunar: LunarDate) -> Holiday? {
+    let calendar = Calendar.current
+    let components = calendar.dateComponents([.day, .month], from: solar)
+    
+    for special in specialDays {
+        if let solarDate = special.solarDate,
+           solarDate.day == components.day && solarDate.month == components.month {
+            return special
+        }
+        
+        if let lunarDate = special.lunarDate {
+            if lunarDate.day == lunar.day && lunarDate.month == lunar.month {
+                return special
             }
         }
     }

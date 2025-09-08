@@ -37,6 +37,7 @@ struct DayCellView: View {
     private func selectTextColor() -> Color {
         return day.isToday || day.isSameDate($currentDate.wrappedValue) ? .white :
         day.isHoliday ? .red :
+        day.isSpecialDay ? .orange :
         day.isInMonth($currentDate.wrappedValue) ? .primary : .gray
     }
     

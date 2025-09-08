@@ -43,9 +43,14 @@ struct MonthGrid: View {
                 ForEach(days, id: \.self) { day in
                     let calendarDay = calendar.lunarDay(for: day)
                     let isBusy = calendarDay.isHoliday
+                    let isSpecial = calendarDay.isSpecialDay
                     
                     Rectangle()
-                        .fill(isBusy ? Color.red : Color.gray.opacity(0.2))
+                        .fill(
+                            isBusy ? Color.red :
+                            isSpecial ? Color.orange :
+                            Color.gray.opacity(0.2)
+                        )
                         .frame(height: 10)
                         .cornerRadius(2)
                 }

@@ -13,11 +13,13 @@ struct HolidayView: View {
     
     var body: some View {
         HStack {
-            Image(systemName: "fireworks")
+            Image(systemName: currentDate.isHoliday ? "fireworks" : "party.popper")
                 .font(.largeTitle)
-                .foregroundColor(.red)
+                .foregroundColor(currentDate.isHoliday ? .red : .orange)
             VStack(alignment: .leading) {
-                let (name, formatted) = currentDate.toHoliday() ?? ("Unknown", "Unknown")
+                let (name, formatted) = (
+                    currentDate.isHoliday ? currentDate.toHoliday() : currentDate.toSpecialDay()
+                ) ?? ("Unknown", "Unknown")
                 Text(formatted)
                     .font(.subheadline)
                     .foregroundColor(.gray)
@@ -34,7 +36,7 @@ struct HolidayView: View {
 
 #Preview {
     let currentDate = Calendar.current.lunarDay(
-        for: Calendar.current.date(from: DateComponents(year: 2025, month: 9, day: 2))!
+        for: Calendar.current.date(from: DateComponents(year: 2025, month: 3, day: 8))!
     )
     HolidayView(currentDate: .constant(currentDate))
 }
