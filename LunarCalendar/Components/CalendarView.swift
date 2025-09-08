@@ -71,6 +71,53 @@ struct CalendarView<Content: View>: View {
 
 #Preview {
     let currentDate = Calendar.current.lunarDay()
+//    
+//    CalendarView(
+//        currentDate: .constant(currentDate),
+//        onNavigate: { offset in
+//            print("\(offset)")
+//        },
+//        formatTitle: { day in
+//            let formatter = DateFormatter()
+//            formatter.dateFormat = "MMMM yyyy"
+//            return formatter.string(from: day.solar)
+//        }
+//    ) {
+//        let days = Calendar.current.monthDays(for: currentDate.solar)
+//        MonthView(days: days, currentDate: .constant(currentDate))
+//    }
+//    
+//    CalendarView(
+//        currentDate: .constant(currentDate),
+//        onNavigate: { offset in
+//            print("\(offset)")
+//        },
+//        formatTitle: { day in
+//            let week = Calendar.current.dateComponents([.weekOfYear, .year], from: currentDate.solar)
+//            let prefix = String("Week")
+//            return "\(prefix) \(week.weekOfYear!), \(week.year!)"
+//        }
+//    ) {
+//        let days = Calendar.current.weekDays(for: currentDate.solar)
+//        WeekView(days: days, currentDate: .constant(currentDate))
+//    }
+    
+    let year = 2025
+    let calendar = Calendar.current
+    
+    var months: [Date] {
+        (1...12).compactMap { month -> Date? in
+            let comps = DateComponents(year: year, month: month, day: 1)
+            return calendar.date(from: comps)
+        }
+    }
+    
+    var columns: [GridItem] {
+        Array(repeating: .init(.flexible(), spacing: 16), count: 3)
+    }
+    
+    var busyDays: Set<Date> = []
+    
     
     CalendarView(
         currentDate: .constant(currentDate),
@@ -78,27 +125,22 @@ struct CalendarView<Content: View>: View {
             print("\(offset)")
         },
         formatTitle: { day in
-            let formatter = DateFormatter()
-            formatter.dateFormat = "MMMM yyyy"
-            return formatter.string(from: day.solar)
+            let comps = Calendar.current.dateComponents([.year], from: currentDate.solar)
+            return "\(comps.year!)"
         }
     ) {
-        let days = Calendar.current.monthDays(for: currentDate.solar)
-        MonthView(days: days, currentDate: .constant(currentDate))
+        
+        LazyVGrid(columns: columns, spacing: 16) {
+            ForEach(months, id: \.self) { month in
+                MonthGrid(month: month)
+                    .onTapGesture {
+                        // Navigate to month view
+                        print("Tapped \(month)")
+                    }
+            }
+        }
+        .padding()
     }
     
-    CalendarView(
-        currentDate: .constant(currentDate),
-        onNavigate: { offset in
-            print("\(offset)")
-        },
-        formatTitle: { day in
-            let week = Calendar.current.dateComponents([.weekOfYear, .year], from: currentDate.solar)
-            let prefix = String("Week")
-            return "\(prefix) \(week.weekOfYear!), \(week.year!)"
-        }
-    ) {
-        let days = Calendar.current.weekDays(for: currentDate.solar)
-        WeekView(days: days, currentDate: .constant(currentDate))
-    }
+    
 }

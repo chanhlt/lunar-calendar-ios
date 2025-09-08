@@ -12,6 +12,7 @@ struct MainView: View {
     @Binding var currentDate: CalendarDay
     var onSwipeUp: (() -> Void)?
     var onToday: () -> Void
+    var onYear: (() -> Void)?
     
     var body: some View {
         VStack(spacing: 20) {
@@ -30,8 +31,8 @@ struct MainView: View {
             Spacer()
             
             MenuView(
-                mode: .month,
-                onMonth: { },
+                mode: .year,
+                onYear: onYear,
                 onToday: onToday,
                 onSettings: { }
             )

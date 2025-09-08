@@ -12,7 +12,6 @@
       }
     },
     "home" : {
-      "extractionState" : "stale",
       "localizations" : {
         "vi" : {
           "stringUnit" : {
@@ -32,19 +31,7 @@
         }
       }
     },
-    "month" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tháng"
-          }
-        }
-      }
-    },
     "settings" : {
-      "extractionState" : "stale",
       "localizations" : {
         "vi" : {
           "stringUnit" : {
@@ -82,6 +69,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tn"
+          }
+        }
+      }
+    },
+    "year" : {
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Năm"
           }
         }
       }

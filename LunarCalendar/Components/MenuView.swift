@@ -9,35 +9,35 @@ import SwiftUI
 
 enum MenuMode {
     case home
-    case month
+    case year
 }
 
 struct MenuView: View {
     var mode: MenuMode
     var onHome: (() -> Void)? = nil
-    var onMonth: (() -> Void)? = nil
+    var onYear: (() -> Void)? = nil
     var onToday: () -> Void
     var onSettings: (() -> Void)? = nil
     
     var body: some View {
         HStack {
-//            Spacer()
+            Spacer()
             
-//            if mode == .month {
-//                Button(action: { onMonth?() }) {
-//                    VStack {
-//                        Image(systemName: "calendar")
-//                        Text("month")
-//                    }
-//                }
-//            } else {
-//                Button(action: { onHome?() }) {
-//                    VStack {
-//                        Image(systemName: "house")
-//                        Text("home")
-//                    }
-//                }
-//            }
+            if mode == .year {
+                Button(action: { onYear?() }) {
+                    VStack {
+                        Image(systemName: "calendar")
+                        Text("year")
+                    }
+                }
+            } else {
+                Button(action: { onHome?() }) {
+                    VStack {
+                        Image(systemName: "house")
+                        Text("home")
+                    }
+                }
+            }
             
             Spacer()
             
@@ -50,14 +50,14 @@ struct MenuView: View {
             
             Spacer()
             
-//            Button(action: { onSettings?() }) {
-//                VStack {
-//                    Image(systemName: "gearshape")
-//                    Text("settings")
-//                }
-//            }
+            Button(action: { onSettings?() }) {
+                VStack {
+                    Image(systemName: "gearshape")
+                    Text("settings")
+                }
+            }
             
-//            Spacer()
+            Spacer()
         }
         .padding()
     }
@@ -65,7 +65,7 @@ struct MenuView: View {
 
 #Preview {
     MenuView(
-        mode: .home,
+        mode: .year,
         onToday: { print("Today tapped") }
     )
 }
