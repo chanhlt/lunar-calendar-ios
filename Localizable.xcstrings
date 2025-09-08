@@ -11,11 +11,33 @@
         }
       }
     },
-    "home" : {
+    "event" : {
       "localizations" : {
-        "vi" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "Event"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sự kiện"
+          }
+        }
+      }
+    },
+    "home" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "Trở lại"
           }
         }
@@ -31,22 +53,18 @@
         }
       }
     },
-    "settings" : {
-      "localizations" : {
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cài đặt"
-          }
-        }
-      }
-    },
     "today" : {
       "extractionState" : "manual",
       "localizations" : {
-        "vi" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "Today"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "Hôm nay"
           }
         }
@@ -55,9 +73,15 @@
     "week" : {
       "extractionState" : "manual",
       "localizations" : {
-        "vi" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "Week"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "tuần"
           }
         }
@@ -65,6 +89,12 @@
     },
     "Wk" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wk"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -75,9 +105,15 @@
     },
     "year" : {
       "localizations" : {
-        "vi" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "Year"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "Năm"
           }
         }

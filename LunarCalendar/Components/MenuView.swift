@@ -52,8 +52,8 @@ struct MenuView: View {
             
             Button(action: { onSettings?() }) {
                 VStack {
-                    Image(systemName: "gearshape")
-                    Text("settings")
+                    Image(systemName: "plus.circle")
+                    Text("event")
                 }
             }
             
