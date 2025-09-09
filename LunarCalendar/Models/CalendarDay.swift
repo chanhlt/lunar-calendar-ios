@@ -26,6 +26,7 @@ struct CalendarDay: Identifiable, Hashable {
     let isToday: Bool
     let isHoliday: Bool
     let isSpecialDay: Bool
+    let events: [Event]
 }
 
 let lunarDB = LunarDatabase()
@@ -102,6 +103,7 @@ extension CalendarDay {
         }
         return (name: _special!.name, formatted: _special!.solarDate != nil ? solar.formatted(date: .long, time: .omitted) : lunar.formatted())
     }
+    
 }
 
 extension Date {
@@ -125,7 +127,8 @@ extension Calendar {
             let lunarMonth = lunar.month
             lunarDayStr = "\(lunarDay)/\(lunarMonth)"
         }
-     
+        
+        let events = loadEvents(solar, lunar)
         return CalendarDay(
             solar: solar,
             lunar: lunar,
@@ -133,7 +136,8 @@ extension Calendar {
             lunarDay: lunarDayStr,
             isToday: isDateInToday(solar),
             isHoliday: holiday(solar, lunar) != nil,
-            isSpecialDay: specialDay(solar, lunar) != nil
+            isSpecialDay: specialDay(solar, lunar) != nil,
+            events: events
         )
     }
     

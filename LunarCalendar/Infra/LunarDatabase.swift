@@ -16,15 +16,25 @@ struct LunarDate: Hashable {
     let isLeapMonth: Bool
 }
 
+
+struct Event: Hashable, Identifiable {
+    let id: Int
+    let name: String
+    let solarDay: Int?
+    let solarMonth: Int?
+    let lunarDay: Int?
+    let lunarMonth: Int?
+    let startHour: Int?
+    let startMinute: Int?
+    let endHour: Int?
+    let endMinute: Int?
+    let isAllDay: Bool
+}
+
+
 class LunarDatabase {
     private let db: Connection
-    private let table = Table("lunar_dates")
     
-    private let solarDate = Expression<String>(value: "solar_date")
-    private let lunarYear = Expression<Int>(value: "lunar_year")
-    private let lunarMonth = Expression<Int>(value: "lunar_month")
-    private let lunarDay = Expression<Int>(value: "lunar_day")
-    private let isLeapMonth = Expression<Int>(value: "is_leap_month")
     
     init?() {
         guard let dbPath = Bundle.main.path(forResource: "lunar_calendar", ofType: "db") else {
@@ -64,6 +74,51 @@ class LunarDatabase {
             print("Query error: \(error)")
         }
         return nil
+    }
+    
+    func queryEvent(_ solar: Date, _ lunar: LunarDate) -> [Event] {
+
+        var events: [Event] = []
+        
+        let comps = Calendar.current.dateComponents([.day, .month], from: solar)
+        let solarDay = comps.day!
+        let solarMonth = comps.month!
+        let lunarDay = lunar.day
+        let lunarMonth = lunar.month
+        
+        do {
+            // Raw SQL with parameter binding
+            let sql = """
+            SELECT id, name, solar_day, solar_month, lunar_day, lunar_month, 
+                   start_hour, start_minute, end_hour, end_minute, is_all_day
+            FROM events 
+            WHERE (solar_day = ? AND solar_month = ?) 
+               OR (lunar_day = ? AND lunar_month = ?)
+            """
+            let stmt = try db.prepare(sql)
+            
+            
+            for row in try stmt.run(solarDay, solarMonth, lunarDay, lunarMonth) {
+                events.append(
+                    Event(
+                        id: Int(row[0] as? Int64 ?? 0),
+                        name: row[1] as? String ?? "",
+                        solarDay: Int(row[2] as? Int64 ?? 0),
+                        solarMonth: Int(row[3] as? Int64 ?? 0),
+                        lunarDay: Int(row[4] as? Int64 ?? 0),
+                        lunarMonth: Int(row[5] as? Int64 ?? 0),
+                        startHour: Int(row[6] as? Int64 ?? 0),
+                        startMinute: Int(row[7] as? Int64 ?? 0),
+                        endHour: Int(row[8] as? Int64 ?? 0),
+                        endMinute: Int(row[9] as? Int64 ?? 0),
+                        isAllDay: (row[10] as? Int64 ?? 0) == 1
+                    )
+                )
+            }
+        } catch {
+            print("Query error: \(error)")
+        }
+        return events
     }
 
 

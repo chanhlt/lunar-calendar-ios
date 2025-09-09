@@ -38,6 +38,7 @@ struct DayCellView: View {
         return day.isToday || day.isSameDate($currentDate.wrappedValue) ? .white :
         day.isHoliday ? .red :
         day.isSpecialDay ? .orange :
+        !day.events.isEmpty ? .yellow :
         day.isInMonth($currentDate.wrappedValue) ? .primary : .gray
     }
     

@@ -38,6 +38,10 @@ struct DetailView: View {
                     HolidayView(currentDate: $currentDate)
                 }
                 
+                ForEach(currentDate.events) { event in
+                    EventView(currentDate: $currentDate, event: event)
+                }
+                
                 Spacer()
             }
             

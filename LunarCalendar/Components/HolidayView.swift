@@ -10,15 +10,21 @@ import SwiftUI
 
 struct HolidayView: View {
     @Binding var currentDate: CalendarDay
+    var event: Event?
     
     var body: some View {
         HStack {
-            Image(systemName: currentDate.isHoliday ? "fireworks" : "party.popper")
+            Image(systemName:
+                    currentDate.isHoliday ? "fireworks" :
+                    currentDate.isSpecialDay ? "party.popper" :
+                    "figure.walk.suitcase.rolling")
                 .font(.largeTitle)
                 .foregroundColor(currentDate.isHoliday ? .red : .orange)
             VStack(alignment: .leading) {
                 let (name, formatted) = (
-                    currentDate.isHoliday ? currentDate.toHoliday() : currentDate.toSpecialDay()
+                    currentDate.isHoliday ? currentDate.toHoliday() :
+                        currentDate.isSpecialDay ? currentDate.toSpecialDay() :
+                        ("Event", "Event")
                 ) ?? ("Unknown", "Unknown")
                 Text(formatted)
                     .font(.subheadline)
