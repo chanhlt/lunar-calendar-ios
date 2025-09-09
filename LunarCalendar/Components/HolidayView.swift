@@ -14,10 +14,7 @@ struct HolidayView: View {
     
     var body: some View {
         HStack {
-            Image(systemName:
-                    currentDate.isHoliday ? "fireworks" :
-                    currentDate.isSpecialDay ? "party.popper" :
-                    "figure.walk.suitcase.rolling")
+            Image(systemName: currentDate.isHoliday ? "fireworks" : "party.popper")
                 .font(.largeTitle)
                 .foregroundColor(currentDate.isHoliday ? .red : .orange)
             VStack(alignment: .leading) {
