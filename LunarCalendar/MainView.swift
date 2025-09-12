@@ -21,7 +21,7 @@ struct MainView: View {
                 onNavigate: changeMonth,
                 formatTitle: monthYearString,
                 onSwipeUp: onSwipeUp,
-                onSwipeLeft: nextMonth,
+                onSwipeLeft: prevMonth,
                 onSwipeRight: nextMonth
             ) {
                 let days = Calendar.current.monthDays(for: currentDate.solar)
